@@ -1,0 +1,15 @@
+.header {
+  height: 74px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid red;
+}
+
+.header__burger-menu {
+  width: 44px;
+  height: 44px;
+
+  background-image: url('../../images/icons/burger.svg');
+}
