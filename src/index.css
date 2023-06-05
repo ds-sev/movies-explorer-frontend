@@ -47,8 +47,8 @@ p {
 }
 @media screen and (max-width: 544px) {
   ._wrapper {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 }
 

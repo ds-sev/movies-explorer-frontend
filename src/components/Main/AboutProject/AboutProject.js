@@ -73,7 +73,7 @@ function AboutProject({}) {
                 середины 2022&nbsp;г. После того, как прошёл курс по&nbsp;веб-разработке, начал
                 заниматься фриланс-заказами и&nbsp;ушёл с&nbsp;постоянной работы.</p>
             </div>
-            <a href="https://github.com/ds-sev" target={'_blank'}>Github</a>
+            <a className="about-me__link" href="https://github.com/ds-sev" target={'_blank'}>Github</a>
           </div>
           <img className="info-container__photo" src={myPhotoPath} alt="мое фото" />
         </div>

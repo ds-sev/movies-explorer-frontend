@@ -9,7 +9,7 @@ function Header({}) {
         <span className="footer__copyright">&#169; 2023</span>
         <ul className="footer__links-container">
           <li><a href="#">Дмитрий Литвиненко</a></li>
-          <li><a href="#">Github</a></li>
+          <li className="footer__link"><a href="#">Github</a></li>
         </ul>
       </div>
     </footer>
