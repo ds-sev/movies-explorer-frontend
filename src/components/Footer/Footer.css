@@ -46,6 +46,7 @@ height: 253px;
     line-height: 15px;
   }
   .footer__links-container {
+    margin-top: 30px;
     flex-direction: column;
     gap: 12px;
   }

@@ -10,6 +10,7 @@ body,
 
 /* ----==== DEFAULT STYLES RESET ====---- */
 ul {
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -23,6 +24,11 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 /* ----==== SHARED STYLES ====---- */
 ._wrapper {
   margin: 0 auto;
@@ -33,12 +39,20 @@ a {
   box-sizing: border-box;
 }
 
+@media screen and (max-width: 768px) {
+  ._wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
 @media screen and (max-width: 544px) {
   ._wrapper {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
+
+
 
 ._button {
   margin: 0;
