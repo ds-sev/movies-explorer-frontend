@@ -13,7 +13,7 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
-  color: #8B8B8B;
+  color: #8b8b8b;
 }
 
 .footer__container {
@@ -28,31 +28,37 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
+
 .footer__links-container {
   display: flex;
   gap: 20px;
 }
+
 @media screen and (max-width: 544px) {
   .footer {
-height: 253px;
+    height: 253px;
   }
+  
   .footer__project-info {
     font-size: 12px;
     line-height: 15px;
   }
+  
   .footer__container {
     flex-direction: column-reverse;
     height: 137px;
     font-size: 12px;
     line-height: 15px;
   }
+  
   .footer__links-container {
     margin-top: 30px;
     flex-direction: column;
     gap: 12px;
   }
+  
   .footer__copyright {
     margin-bottom: 20px;
     color: #8b8b8b;

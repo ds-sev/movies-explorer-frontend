@@ -4,20 +4,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  
 }
 
 .header__burger-menu {
   width: 44px;
   height: 44px;
-
+  
   background-image: url('../../images/icons/burger.svg');
 }
 
 @media screen and (max-width: 544px) {
- .header {
-   height: 78px;
- }
-
-
+  .header {
+    height: 78px;
+  }
+  
 }

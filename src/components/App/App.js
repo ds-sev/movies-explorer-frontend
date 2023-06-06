@@ -2,7 +2,8 @@
 import './App.css'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import AboutProject from '../Main/AboutProject/AboutProject'
+import Main from '../Main/Main'
+import Movies from '../Movies/Movies'
 
 function App() {
 
@@ -12,8 +13,10 @@ function App() {
       <div className="body">
         <div className="page">
           <Header />
+          <Movies />
           {/*<div className="ex"></div>*/}
-          <AboutProject></AboutProject>
+          {/*<Main></Main>*/}
+
 
           <div className="push">
           </div>
