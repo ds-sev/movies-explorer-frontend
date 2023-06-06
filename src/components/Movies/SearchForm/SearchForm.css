@@ -1,6 +1,6 @@
 .search {
-  padding-top: 80px;
-  padding-bottom: 50px;
+  padding-top: 60px;
+  padding-bottom: 70px;
   border-bottom: 1px solid #424242;
 }
 
@@ -40,6 +40,7 @@
   right: 6px;
   border-radius: 50%;
   border: none;
+  cursor: pointer;
   background-color: transparent;
   background-image: url('../../../images/icons/find.svg');
   background-repeat: no-repeat;
@@ -47,7 +48,18 @@
   background-position: center;
 }
 
+@media screen and (max-width: 768px) {
+  .search {
+    padding-top: 80px;
+    padding-bottom: 50px;
+  }
+}
+
 @media screen and (max-width: 544px) {
+  .search {
+    padding-top: 75px;
+
+  }
   .search__input {
     font-size: 12px;
     line-height: 155%;

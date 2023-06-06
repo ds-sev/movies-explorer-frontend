@@ -19,6 +19,7 @@
   padding-left: 50px;
   display: inline-block;
   position: relative;
+  cursor: pointer;
   font-weight: 400;
   font-size: 14px;
   line-height: 129%;
