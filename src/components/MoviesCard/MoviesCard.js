@@ -1,6 +1,6 @@
 import './MoviesCard.css'
 
-import exampleCardImagePath from '../../../images/movie_example/movie_card_pic.jpg'
+import exampleCardImagePath from '../../images/movie_example/movie_card_pic.jpg'
 
 function MoviesCard({}) {
   return (
