@@ -9,6 +9,8 @@ import { Route, Routes } from 'react-router-dom'
 import SavedMovies from '../SavedMovies/SavedMovies'
 import Layout from '../Layout/Layout'
 import NotFoundPage from '../NotFoundPage/NotFoundPage'
+import Login from '../Login/Login'
+import Register from '../Register/Register'
 
 function App() {
 
@@ -53,8 +55,8 @@ function App() {
 
             </Route>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/signin" element={<Profile />} />
-            <Route path="/signup" element={<Profile />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
             <Route path="*" element={<NotFoundPage />} />
 
           </Routes>

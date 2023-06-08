@@ -1,4 +1,5 @@
 import './Profile.css'
+import Header from '../Header/Header'
 
 function Profile({}) {
   const userName = 'Виталий Белебердаевич Автоматенченчичнеко'
@@ -8,6 +9,8 @@ function Profile({}) {
     evt.preventDefault()
   }
   return (
+    <>
+    <Header />
       <section className="profile">
         <h2 className="profile__title">{`Привет, ${userName}!`}</h2>
         <form onSubmit={handleSubmit}>
@@ -41,6 +44,7 @@ function Profile({}) {
         </form>
         <button className="profile__signout _button">Выйти из аккаунта</button>
       </section>
+    </>
   )
 }
 

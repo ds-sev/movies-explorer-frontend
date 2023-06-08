@@ -22,20 +22,20 @@
   letter-spacing: -0.04em;
 }
 
-.new-tab {
+.nav-tab {
   margin-bottom: 30px;
   display: flex;
   gap: 10px;
 }
 
-.new-tab__links {
+.nav-tab__links {
   width: 96px;
   height: 36px;
   border-radius: 10px;
   background-color: #303030;
 }
 
-.new-tab__link {
+.nav-tab__link {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,18 +73,18 @@
     line-height: 128%;
   }
   
-  .new-tab__links {
+  .nav-tab__links {
     width: 82px;
     height: 26px;
     border-radius: 6px;
   }
   
-  .new-tab {
+  .nav-tab {
     margin-bottom: 17px;
     gap: 6px;
   }
   
-  .new-tab__link {
+  .nav-tab__link {
     font-size: 10px;
     line-height: 160%;
   }
