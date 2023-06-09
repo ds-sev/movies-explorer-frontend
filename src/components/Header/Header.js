@@ -1,19 +1,44 @@
 import './Header.css'
 import Logo from '../Logo/Logo'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function Header({}) {
   const isLoggedIn = true
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false)
-  const handleBurgerBtnClick = () => setIsBurgerOpen(true)
+  const handleBurgerBtnClick = () => {
+    setIsBurgerOpen(true)
+  }
   const handleCloseBurgerBtn = () => setIsBurgerOpen(false)
+
+// close menu by ESC-key
+  useEffect(() => {
+    function handleEscKeyClose(evt) {
+      console.log(evt)
+      if (evt.code === 'Escape') {
+        setIsBurgerOpen(false)
+      }
+    }
+    if (isBurgerOpen) {
+      document.addEventListener('keydown', handleEscKeyClose)
+    }
+    return () => document.removeEventListener('keydown', handleEscKeyClose)
+  })
+
+// close menu by overlay-click
+  function handleOverlayClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      setIsBurgerOpen(false)
+    }
+  }
 
   return (
 
     <header className={`header _wrapper ${isBurgerOpen && 'header__burger-open'}`}>
+
       <Logo />
+      <div className={`${isBurgerOpen && 'header__overlay'}`} onClick={handleOverlayClick}></div>
       {!isLoggedIn ? (
         <>
           <Link to="/signup">Регистрация</Link>
