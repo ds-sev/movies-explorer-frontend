@@ -68,7 +68,7 @@ p {
 
 ._button:hover {
   transition: ease-in .1s;
-  opacity: .6;
+  opacity: .8;
   cursor: pointer;
 }
 

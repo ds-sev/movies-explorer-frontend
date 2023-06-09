@@ -3,9 +3,16 @@ import '../Shared/SharedStyles.css'
 import Logo from '../Logo/Logo'
 import { Link } from 'react-router-dom'
 
-
-function SignPage({ children, btnText, pageTitle, hintText, hintLinkText, hintLink, onSubmit, isValid }) {
-
+function SignPage({
+                    children,
+                    btnText,
+                    pageTitle,
+                    hintText,
+                    hintLinkText,
+                    hintLink,
+                    onSubmit,
+                    isValid
+                  }) {
 
   return (
     <section className="sign-page">
