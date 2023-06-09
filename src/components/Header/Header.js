@@ -10,7 +10,7 @@ function Header({}) {
   const handleBurgerBtnClick = () => {
     setIsBurgerOpen(true)
   }
-  const handleCloseBurgerBtn = () => setIsBurgerOpen(false)
+  const handleCloseBurgerClick = () => setIsBurgerOpen(false)
 
 // close menu by ESC-key
   useEffect(() => {
@@ -20,6 +20,7 @@ function Header({}) {
         setIsBurgerOpen(false)
       }
     }
+
     if (isBurgerOpen) {
       document.addEventListener('keydown', handleEscKeyClose)
     }
@@ -36,7 +37,6 @@ function Header({}) {
   return (
 
     <header className={`header _wrapper ${isBurgerOpen && 'header__burger-open'}`}>
-
       <Logo />
       <div className={`${isBurgerOpen && 'header__overlay'}`} onClick={handleOverlayClick}></div>
       {!isLoggedIn ? (
@@ -51,12 +51,15 @@ function Header({}) {
                   type="button"></button>
           <nav className="header__navigation">
             <button className="header__burger-close-btn _button"
-                    onClick={handleCloseBurgerBtn}
+                    onClick={handleCloseBurgerClick}
                     type="button"></button>
             <ul className="header__nav-links-container">
-              <li className="header__nav-link"><Link to="/">Главная</Link></li>
-              <li className="header__nav-link"><Link to="/movies">Фильмы</Link></li>
-              <li className="header__nav-link"><Link to="/saved-movies">Сохраненные фильмы</Link></li>
+              <li className="header__nav-link" onClick={handleCloseBurgerClick}>
+                <Link to="/">Главная</Link></li>
+              <li className="header__nav-link" onClick={handleCloseBurgerClick}>
+                <Link to="/movies">Фильмы</Link></li>
+              <li className="header__nav-link" onClick={handleCloseBurgerClick}>
+                <Link to="/saved-movies">Сохраненные фильмы</Link></li>
             </ul>
             <Link to="/profile" className="header__navigation-account _button">Аккаунт
               <div className="header__nav-account-icon"></div>
