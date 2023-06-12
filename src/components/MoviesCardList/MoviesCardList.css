@@ -42,10 +42,12 @@
   .movie-card-section {
     margin-top: 50px;
   }
+  
   .movie-card-section__list {
     gap: 16px;
     grid-template-columns: 100%;
   }
+  
   .movie-card-section__view-more {
     width: 240px;
   }

@@ -6,8 +6,31 @@
   justify-content: space-between;
 }
 
+.header__unauthorized {
+  display: flex;
+  gap: 30px;
+}
+
+.header__signup-button {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  color: #ffffff;
+}
+
+.header__signin-button {
+  width: 76px;
+  height: 32px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  background-color: #3ddc84;
+}
+
 .header__navigation {
-  padding-left: 30px;
+  padding-left: 43px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -53,7 +76,6 @@
   background-image: url('../../images/icons/profile.svg');
   background-repeat: no-repeat;
   background-position: center;
-  
 }
 
 .header__burger-menu {
@@ -111,6 +133,7 @@
     bottom: 0;
     left: 0;
     opacity: .6;
+    transition: .5s;
     z-index: 1;
     background-color: #202020;
   }
@@ -160,6 +183,22 @@
   .header {
     height: 78px;
   }
+  
+  .header__unauthorized {
+    gap: 14px;
+  }
+  
+  .header__signup-button {
+    font-size: 10px;
+    line-height: 160%;
+  }
+  
+  .header__signin-button {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+    line-height: 160%;
+  }
 }
 
 @media screen and (max-width: 386px) {
@@ -172,6 +211,15 @@
   
   .header__nav-links-container {
     gap: 18px;
+  }
+  
+  .header__burger-menu {
+    margin-right: 5px;
+    width: 35px;
+    height: 35px;
+    background-image: url('../../images/icons/burger.svg');
+    background-size: cover;
+    z-index: 2;
   }
   
   .header__burger-close-btn {

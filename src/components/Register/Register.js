@@ -1,21 +1,17 @@
-import './Register.css'
-import '../Shared/SharedStyles.css'
 import SignPage from '../SignPage/SignPage'
-import { useEffect } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import { useNavigate } from 'react-router-dom'
 
-function Register({}) {
+function Register() {
 
-  const { values, handleChange, errors, isValid, setIsValid, resetForm } =
+  const navigate = useNavigate()
+
+  const { values, handleChange, errors, isValid } =
     useFormWithValidation()
-
-  useEffect(() => {
-    resetForm()
-    setIsValid(false)
-  }, [])
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
+    navigate('/signin')
   }
 
   return (

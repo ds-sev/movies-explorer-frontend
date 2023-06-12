@@ -29,7 +29,6 @@
   grid-template-columns: repeat(auto-fill, 90px);
   align-items: center;
   justify-content: center;
-  
   max-width: 690px;
   gap: 10px;
 }

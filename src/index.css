@@ -45,6 +45,7 @@ p {
     padding-right: 30px;
   }
 }
+
 @media screen and (max-width: 544px) {
   ._wrapper {
     padding-left: 12px;
@@ -52,15 +53,13 @@ p {
   }
 }
 
-
-
 ._button {
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  /*cursor: pointer;*/
+  cursor: pointer;
   border: none;
   background-color: transparent;
   transition: ease-out .2s;
@@ -70,6 +69,15 @@ p {
   transition: ease-in .1s;
   opacity: .8;
   cursor: pointer;
+}
+
+._link {
+  transition: ease-out .2s;
+}
+
+._link:hover {
+  transition: ease-in .1s;
+  opacity: .8;
 }
 
 

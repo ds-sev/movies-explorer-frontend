@@ -1,5 +1,4 @@
 import './SignPage.css'
-import '../Shared/SharedStyles.css'
 import Logo from '../Logo/Logo'
 import { Link } from 'react-router-dom'
 
@@ -11,7 +10,8 @@ function SignPage({
                     hintLinkText,
                     hintLink,
                     onSubmit,
-                    isValid
+                    isValid,
+                    isSignError
                   }) {
 
   return (
@@ -22,13 +22,15 @@ function SignPage({
       </div>
       <form className="sign__form" onSubmit={onSubmit}>
         {children}
+        {isSignError &&
+          <span className="signInputErrorClass">Проверьте правильность ввода логина или пароля</span>}
         <button
           className={`sign__button _button ${!isValid && 'sign__button_disabled'} `}
           type="submit"
         >
           {btnText}
         </button>
-        <span className="sign__hint">{hintText}<Link to={hintLink} className="_link"
+        <span className="sign__hint">{hintText}<Link to={hintLink} className="sign__link _link"
         >{hintLinkText}</Link></span>
       </form>
     </section>

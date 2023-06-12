@@ -3,8 +3,7 @@ import Logo from '../Logo/Logo'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-function Header({}) {
-  const isLoggedIn = true
+function Header() {
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false)
   const handleBurgerBtnClick = () => {
@@ -15,7 +14,6 @@ function Header({}) {
 // close menu by ESC-key
   useEffect(() => {
     function handleEscKeyClose(evt) {
-      console.log(evt)
       if (evt.code === 'Escape') {
         setIsBurgerOpen(false)
       }
@@ -35,15 +33,16 @@ function Header({}) {
   }
 
   return (
-
     <header className={`header _wrapper ${isBurgerOpen && 'header__burger-open'}`}>
       <Logo />
       <div className={`${isBurgerOpen && 'header__overlay'}`} onClick={handleOverlayClick}></div>
-      {!isLoggedIn ? (
-        <>
-          <Link to="/signup">Регистрация</Link>
-          <Link to="/signin">Войти</Link>
-        </>
+      {/*TEMP*/}
+      {!localStorage.getItem('loggedIn') ? (
+        <div className="header__unauthorized">
+          <button className="header__signup-button _button"><Link to="/signup">Регистрация</Link>
+          </button>
+          <button className="header__signin-button _button"><Link to="/signin">Войти</Link></button>
+        </div>
       ) : (
         <>
           <button className="header__burger-menu _button"
@@ -61,7 +60,9 @@ function Header({}) {
               <li className="header__nav-link" onClick={handleCloseBurgerClick}>
                 <Link to="/saved-movies">Сохраненные фильмы</Link></li>
             </ul>
-            <Link to="/profile" className="header__navigation-account _button">Аккаунт
+            <Link to="/profile"
+                  className="header__navigation-account _button"
+                  onClick={handleCloseBurgerClick}>Аккаунт
               <div className="header__nav-account-icon"></div>
             </Link>
           </nav>

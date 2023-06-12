@@ -58,8 +58,9 @@
 @media screen and (max-width: 544px) {
   .search {
     padding-top: 75px;
-
+    
   }
+  
   .search__input {
     font-size: 12px;
     line-height: 155%;

@@ -1,6 +1,6 @@
 import './FilterCheckbox.css'
 
-function FilterCheckbox({}) {
+function FilterCheckbox() {
   return (
     <div className="checkbox">
       <label className="checkbox__container">

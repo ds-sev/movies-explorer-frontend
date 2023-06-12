@@ -1,6 +1,6 @@
 import './Techs.css'
 
-function Techs({}) {
+function Techs() {
   return (
     <section className="techs-section main-section-wrapper" id="techs">
       <h2 className="main-section__title">Технологии</h2>

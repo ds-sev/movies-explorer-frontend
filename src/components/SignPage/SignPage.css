@@ -13,11 +13,79 @@
   padding: 0;
 }
 
+.sign__inputs-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  border: none;
+  width: 100%;
+  box-sizing: content-box;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sign__input-container {
+  position: relative;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+}
+
+.sign-input__error {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  bottom: -20px;
+  left: 0;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+
+.sign__input {
+  margin-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 46px;
+  border: none;
+  outline: none;
+  background-color: #2f2f2f;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ffffff;
+}
+
+.sign__input_accent {
+  color: #ee3465;
+}
+
 .sign__title {
   margin: 40px 0;
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
+}
+
+.sign__link {
+  margin: 0 6px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4285f4;
+}
+
+@media screen and (max-width: 544px) {
+  .sign__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
 
 .sign__hint {
@@ -56,6 +124,17 @@
   transition: none;
   opacity: 1;
   cursor: unset;
+}
+
+.signInputErrorClass {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 95px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #ee3465;
 }
 
 @media screen and (max-width: 768px) {

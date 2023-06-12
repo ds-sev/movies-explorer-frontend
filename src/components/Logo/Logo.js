@@ -1,7 +1,7 @@
 import './Logo.css'
 import { Link } from 'react-router-dom'
 
-function Logo({}) {
+function Logo() {
   return (
     <Link to="/">
       <div className="logo _button"></div>

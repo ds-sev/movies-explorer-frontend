@@ -27,10 +27,10 @@
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  color: #8B8B8B;
+  color: #8b8b8b;
 }
 
-.movie-card__favourite {
+.movie-card__like {
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -40,6 +40,10 @@
   background-image: url('../../images/icons/bookmark_unactive.svg');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.movie-card__like_active {
+  background-image: url('../../images/icons/bookmark_active.svg');
 }
 
 @media screen and (max-width: 1024px) {

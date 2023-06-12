@@ -1,7 +1,7 @@
 import './AboutMe.css'
 import myPhotoPath from '../../../images/author/me.jpg'
 
-function AboutMe({}) {
+function AboutMe() {
   return (
     <main className="about-me main-section-wrapper" id="about-me">
       <h2 className="main-section__title">Студент</h2>
@@ -19,9 +19,9 @@ function AboutMe({}) {
               середины 2022&nbsp;г. После того, как прошёл курс по&nbsp;веб-разработке, начал
               заниматься фриланс-заказами и&nbsp;ушёл с&nbsp;постоянной работы.</p>
           </div>
-          <a className="about-me__link"
+          <a className="about-me__link _link"
              href="https://github.com/ds-sev"
-             target={'_blank'}>Github</a>
+             target={'_blank'} rel="noreferrer">Github</a>
         </div>
         <img className="info-container__photo" src={myPhotoPath} alt="мое фото" />
       </div>

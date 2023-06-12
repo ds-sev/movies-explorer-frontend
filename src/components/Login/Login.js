@@ -1,21 +1,26 @@
-import './Login.css'
-import '../Shared/SharedStyles.css'
 import SignPage from '../SignPage/SignPage'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import { useNavigate } from 'react-router-dom'
 
-function Login({}) {
+function Login() {
 
-  const { values, handleChange, errors, isValid, setIsValid, resetForm } =
+  const navigate = useNavigate()
+
+  const [isSignError, setIsSignError] = useState(false)
+
+  const { values, handleChange, errors, isValid } =
     useFormWithValidation()
-
-  useEffect(() => {
-    resetForm()
-    setIsValid(false)
-  }, [])
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
+    // TEMP
+    if (values.email === 'admin@admin' && values.password === 'admin@admin') {
+      localStorage.setItem('loggedIn', 'yes')
+      navigate('/')
+    } else {
+      setIsSignError(true)
+    }
   }
 
   return (
@@ -26,6 +31,7 @@ function Login({}) {
               hintLink="/signup"
               onSubmit={handleSubmit}
               isValid={isValid}
+              isSignError={isSignError}
     >
       <fieldset className="sign__inputs-container">
         <label className="sign__input-container">E-mail
@@ -55,6 +61,8 @@ function Login({}) {
           <span className="sign-input__error">{errors.password || ''}</span>
         </label>
       </fieldset>
+      {/*TEMP*/}
+      <span style={{ position: 'absolute', top: '50%', opacity: .3 }}>*temp for login:<br /> email: admin@admin <br />pass: admin@admin</span>
     </SignPage>
   )
 }
