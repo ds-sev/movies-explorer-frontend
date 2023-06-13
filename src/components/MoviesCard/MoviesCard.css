@@ -1,0 +1,59 @@
+.movie-card {
+  max-height: 271px;
+  background-color: #222222;
+  overflow: hidden;
+}
+
+.movie-card__image {
+  height: 203px;
+}
+
+.movie-card__info {
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-card__title {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.movie-card__duration {
+  margin-top: 9px;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8b8b8b;
+}
+
+.movie-card__like {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-image: url('../../images/icons/bookmark_unactive.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.movie-card__like_active {
+  background-image: url('../../images/icons/bookmark_active.svg');
+}
+
+@media screen and (max-width: 1024px) {
+  .movie-card__image {
+    height: 189px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .movie-card__image {
+    height: 167px;
+  }
+}

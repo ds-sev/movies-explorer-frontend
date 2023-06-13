@@ -1,0 +1,122 @@
+.about-project {
+  margin-top: 89px;
+}
+
+.about-project__description-container {
+  margin-top: 70px;
+  margin-bottom: 112px;
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.about-project__description-block {
+}
+
+.description-block__title {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 117%;
+  letter-spacing: -0.04em;
+}
+
+.description-block__subtitle {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.about-project__graph {
+  margin-bottom: 100px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.graph__sector {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph__sector-period {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background-color: #303030;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.graph__sector-period_accent {
+  color: black;
+  background-color: #3ddc84;
+}
+
+.graph__sector-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  font-family: 'Suisse Intl', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 121%;
+  color: #a0a0a0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    margin-top: 70px;
+  }
+  
+  .about-project__description-container {
+    gap: 30px;
+    margin-bottom: 92px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .about-project {
+    margin-top: 50px;
+  }
+  
+  .about-project__description-container {
+    margin-top: 60px;
+    margin-bottom: 58px;
+    grid-template-columns: 1fr;
+    gap: 58px;
+  }
+  
+  .description-block__title {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  .description-block__subtitle {
+    font-size: 11px;
+    line-height: 145%;
+  }
+  
+  .about-project__graph {
+    grid-template-columns: 100px auto;
+  }
+  
+  .graph__sector-period {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  
+  .graph__sector-description {
+    height: 30px;
+    font-size: 11px;
+  }
+  
+  .about-project__graph {
+    margin-bottom: 66px;
+  }
+}
