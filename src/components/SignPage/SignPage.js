@@ -15,7 +15,7 @@ function SignPage({
                   }) {
 
   return (
-    <section className="sign-page">
+    <main className="sign-page">
       <div className="sign-page__head-container">
         <Logo />
         <h3 className="sign__title">{pageTitle}</h3>
@@ -33,7 +33,7 @@ function SignPage({
         <span className="sign__hint">{hintText}<Link to={hintLink} className="sign__link _link"
         >{hintLinkText}</Link></span>
       </form>
-    </section>
+    </main>
   )
 }
 

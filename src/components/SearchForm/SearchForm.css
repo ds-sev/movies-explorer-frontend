@@ -26,6 +26,10 @@
   color: #ffffff;
 }
 
+.search__input:focus {
+  outline: 1px solid lightslategray;
+}
+
 .search__input::placeholder {
   font-size: 13px;
   color: #8b8b8b;

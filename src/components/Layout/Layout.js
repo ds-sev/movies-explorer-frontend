@@ -6,10 +6,10 @@ function Layout() {
   return (
     <>
       <Header />
-      {/*<main>*/}
-      <Outlet />
-      <div className="push"></div>
-      {/*</main>*/}
+      <main>
+        <Outlet />
+        <div className="push"></div>
+      </main>
       <Footer />
     </>
   )

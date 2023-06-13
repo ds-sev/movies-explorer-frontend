@@ -61,8 +61,6 @@ function Login() {
           <span className="sign-input__error">{errors.password || ''}</span>
         </label>
       </fieldset>
-      {/*TEMP*/}
-      <span style={{ position: 'absolute', top: '50%', opacity: .3 }}>*temp for login:<br /> email: admin@admin <br />pass: admin@admin</span>
     </SignPage>
   )
 }

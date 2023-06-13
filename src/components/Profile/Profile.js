@@ -30,7 +30,7 @@ function Profile() {
   return (
     <>
       <Header />
-      <section className="profile">
+      <main className="profile">
         <h2 className="profile__title">{`Привет, ${userName}!`}</h2>
         <form className="profile__fields-container" onSubmit={handleSubmit}>
           <label className="profile__field">
@@ -79,7 +79,7 @@ function Profile() {
             аккаунта</button>
         )
         }
-      </section>
+      </main>
     </>
   )
 }
