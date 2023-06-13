@@ -6,16 +6,30 @@ import { useEffect, useState } from 'react'
 function Header() {
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false)
+
+  const scrollController = {
+    disableScroll() {
+      document.body.style.cssText = `overflow: hidden`
+    },
+    enableScroll() {
+      document.body.style.cssText = ''
+    }
+  }
   const handleBurgerBtnClick = () => {
     setIsBurgerOpen(true)
+    scrollController.disableScroll()
   }
-  const handleCloseBurgerClick = () => setIsBurgerOpen(false)
+  const handleCloseBurgerClick = () => {
+    setIsBurgerOpen(false)
+    scrollController.enableScroll()
+  }
 
 // close menu by ESC-key
   useEffect(() => {
     function handleEscKeyClose(evt) {
       if (evt.code === 'Escape') {
         setIsBurgerOpen(false)
+        scrollController.enableScroll()
       }
     }
 
@@ -29,6 +43,7 @@ function Header() {
   function handleOverlayClick(evt) {
     if (evt.target === evt.currentTarget) {
       setIsBurgerOpen(false)
+      scrollController.enableScroll()
     }
   }
 

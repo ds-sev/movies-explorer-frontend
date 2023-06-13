@@ -10,6 +10,12 @@
   color: #8b8b8b;
 }
 
+.portfolio__list-item:last-child {
+  border-bottom: none;
+  margin-bottom: 105px;
+}
+
+
 .portfolio__link {
   height: 89px;
   display: flex;
@@ -20,11 +26,6 @@
   font-size: 30px;
   line-height: 167%;
   letter-spacing: -0.04em;
-}
-
-.portfolio__link:last-child {
-  border-bottom: none;
-  margin-bottom: 105px;
 }
 
 .portfolio__link-icon {
@@ -46,7 +47,7 @@
     line-height: 179%;
   }
   
-  .portfolio__link:last-child {
+  .portfolio__list-item:last-child {
     margin-bottom: 72px;
   }
 }
@@ -54,7 +55,6 @@
 @media screen and (max-width: 544px) {
   .portfolio {
     margin-top: 60px;
-    
   }
   
   .portfolio__title {
@@ -71,7 +71,7 @@
     border-color: #e6e6e6;
   }
   
-  .portfolio__link:last-child {
+  .portfolio__list-item:last-child {
     margin-bottom: 50px;
   }
   

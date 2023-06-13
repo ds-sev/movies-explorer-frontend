@@ -62,6 +62,10 @@
   color: #ffffff;
 }
 
+.sign__input:focus {
+  outline: 1px solid lightslategray;
+}
+
 .sign__input_accent {
   color: #ee3465;
 }
