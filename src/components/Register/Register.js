@@ -1,6 +1,9 @@
 import SignPage from '../SignPage/SignPage'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import mainApi from '../../utils/MainApi'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Register() {
 
@@ -11,7 +14,16 @@ function Register() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-    navigate('/signin')
+    mainApi.register({ name: values.name, email: values.email, password: values.password })
+    .then((res) => {
+      mainApi.login({email: values.email, password: values.password})
+      .then(() => {
+
+      })
+    })
+    .catch((err) => {
+      console.log(err) // !!!CREATE ERROR POPUP HERE!!!
+    })
   }
 
   return (

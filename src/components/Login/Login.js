@@ -2,8 +2,9 @@ import SignPage from '../SignPage/SignPage'
 import { useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { useNavigate } from 'react-router-dom'
+import mainApi from '../../utils/MainApi'
 
-function Login() {
+function Login({ onLogin }) {
 
   const navigate = useNavigate()
 
@@ -13,14 +14,9 @@ function Login() {
     useFormWithValidation()
 
   const handleSubmit = (evt) => {
+    // setFormValues({email: values.email, password: values.password})
     evt.preventDefault()
-    // TEMP
-    if (values.email === 'admin@admin' && values.password === 'admin@admin') {
-      localStorage.setItem('loggedIn', 'yes')
-      navigate('/')
-    } else {
-      setIsSignError(true)
-    }
+    onLogin(values)
   }
 
   return (

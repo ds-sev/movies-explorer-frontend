@@ -2,6 +2,7 @@ import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard'
 import Preloader from '../Preloader/Preloader'
 import { useEffect, useState } from 'react'
+import { getMovies } from '../../utils/MoviesApi'
 
 function MoviesCardList() {
 

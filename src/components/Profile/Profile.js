@@ -1,14 +1,19 @@
 import './Profile.css'
 import Header from '../Header/Header'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { useNavigate } from 'react-router-dom'
+import mainApi from '../../utils/MainApi'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Profile() {
   const navigate = useNavigate()
 
   const userName = 'Виталий'
   const userEmail = 'admin@admin'
+
+  const userContextData = useContext(CurrentUserContext)
+
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
@@ -20,8 +25,12 @@ function Profile() {
   const onSignoutClick = (evt) => {
     evt.preventDefault()
     // TEMP
-    localStorage.clear()
-    navigate('/signin')
+    localStorage.removeItem('loggedIn')
+    mainApi.signout()
+    .then(() => {
+      navigate('/', { replace: true })
+    })
+
   }
 
   const handleSubmit = (evt) => {
@@ -31,13 +40,13 @@ function Profile() {
     <>
       <Header />
       <main className="profile">
-        <h2 className="profile__title">{`Привет, ${userName}!`}</h2>
+        <h2 className="profile__title">{`Привет, ${userContextData.name}!`}</h2>
         <form className="profile__fields-container" onSubmit={handleSubmit}>
           <label className="profile__field">
             <span className="profile__field-description">Имя</span>
             <input
               className="profile__field-value"
-              value={values.name || userName}
+              value={values.name || userContextData.name}
               onChange={handleChange}
               disabled={isProfileEditDisabled && 'disabled'}
               name="name"
@@ -57,7 +66,7 @@ function Profile() {
               disabled={isProfileEditDisabled && 'disabled'}
               name="email"
               type="email"
-              value={values.email || userEmail}
+              value={values.email || userContextData.email}
               placeholder="Email"
               minLength="2"
               maxLength="30"
