@@ -2,18 +2,11 @@ import './Profile.css'
 import Header from '../Header/Header'
 import { useContext, useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
-import { useNavigate } from 'react-router-dom'
-import mainApi from '../../utils/MainApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-function Profile() {
-  const navigate = useNavigate()
+function Profile({ onSignOut }) {
 
-  const userName = 'Виталий'
-  const userEmail = 'admin@admin'
-
-  const userContextData = useContext(CurrentUserContext)
-
+  const currentUser = useContext(CurrentUserContext)
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
@@ -22,15 +15,9 @@ function Profile() {
 
   const handleProfileEditBtnClick = () => setIsProfileEditDisabled(false)
 
-  const onSignoutClick = (evt) => {
+  const onSignoutBtnClick = (evt) => {
     evt.preventDefault()
-    // TEMP
-    localStorage.removeItem('loggedIn')
-    mainApi.signout()
-    .then(() => {
-      navigate('/', { replace: true })
-    })
-
+    onSignOut()
   }
 
   const handleSubmit = (evt) => {
@@ -40,13 +27,13 @@ function Profile() {
     <>
       <Header />
       <main className="profile">
-        <h2 className="profile__title">{`Привет, ${userContextData.name}!`}</h2>
+        <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
         <form className="profile__fields-container" onSubmit={handleSubmit}>
           <label className="profile__field">
             <span className="profile__field-description">Имя</span>
             <input
               className="profile__field-value"
-              value={values.name || userContextData.name}
+              value={values.name || currentUser.name}
               onChange={handleChange}
               disabled={isProfileEditDisabled && 'disabled'}
               name="name"
@@ -66,7 +53,7 @@ function Profile() {
               disabled={isProfileEditDisabled && 'disabled'}
               name="email"
               type="email"
-              value={values.email || userContextData.email}
+              value={values.email || currentUser.email}
               placeholder="Email"
               minLength="2"
               maxLength="30"
@@ -84,7 +71,7 @@ function Profile() {
           )}
         </form>
         {isProfileEditDisabled && (
-          <button className={`profile__signout _button`} onClick={onSignoutClick}>Выйти из
+          <button className={`profile__signout _button`} onClick={onSignoutBtnClick}>Выйти из
             аккаунта</button>
         )
         }

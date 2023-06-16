@@ -12,10 +12,12 @@ import { useEffect, useState } from 'react'
 import mainApi from '../../utils/MainApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute'
-
+import InfoTooltip from '../InfoTooltip/InfoTooltip'
+import SuccessIcon from '../../images/icons/ok.svg'
+import FailIcon from '../../images/icons/not_ok.svg'
+import ConfirmIcon from '../../images/icons/confirm.svg'
 
 //TODO: errors popups!!!
-//TODO: signin не должен открываться если пользователь залогинен
 function App() {
   /* STATES */
   //popups states
@@ -24,29 +26,41 @@ function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [likedMovies, setLikedMovies] = useState({})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [infoTooltipState, setInfoTooltipState] = useState({ isOpen: false, text: '', image: '' })
+
+  function closePopup() {
+    setInfoTooltipState({ isOpen: false, text: '', image: '' })
+    scrollController.enableScroll()
+  }
+
+  const scrollController = {
+    disableScroll() {
+      document.body.style.cssText = `overflow: hidden`
+    },
+    enableScroll() {
+      document.body.style.cssText = ''
+    }
+  }
 
   const navigate = useNavigate()
 
   useEffect(() => checkAuth(), [])
 
-  // useEffect(() => {
-  //   checkAuth()
-  //   if (isLoggedIn) {
-  //     Promise.all([mainApi.getUserInfo(), mainApi.getMyMovies()])
-  //     .then(([userData, likedMovies]) => {
-  //       setCurrentUser(userData)
-  //       setLikedMovies(likedMovies)
-  //     })
-  //     .catch((err) => console.log(err))
-  //   }
-  // }, [isLoggedIn])
-
-
-
+  useEffect(() => {
+    console.log(infoTooltipState)
+    if (isLoggedIn) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMyMovies()])
+      .then(([userData, likedMovies]) => {
+        setCurrentUser(userData)
+        setLikedMovies(likedMovies)
+      })
+      .catch((err) => console.log(err))
+    }
+  }, [isLoggedIn])
 
   function checkAuth() {
     if (localStorage.getItem('loggedIn')) {
-      mainApi.checkToken()
+      mainApi.getUserInfo()
       .then((res) => {
         if (res) {
           setIsLoggedIn(true)
@@ -59,32 +73,55 @@ function App() {
     }
   }
 
-  // useEffect(() => {
-  //   tokenCheck()
-  //   if (loggedIn) {
-  //     Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([userData, cardsData]) => {
-  //       setCurrentUser(userData)
-  //       setCards(cardsData.reverse())
-  //     })
-  //     .catch((err) => console.log(err))
-  //   }
-  // }, [loggedIn])
-
-  function handleLogin(formValues) {
+  function handleLogin(formValues, signinMessage) {
     mainApi.login(formValues)
-    .then((res) => {
-      console.log(res)
+    .then(() => {
       localStorage.setItem('loggedIn', 'true')
       setIsLoggedIn(true)
-
       navigate('/movies', { replace: true })
       setTimeout(() => {
         localStorage.removeItem('loggedIn')
       }, 3600000)
+      setInfoTooltipState({ isOpen: true, text: signinMessage, image: SuccessIcon, btn: false })
+      scrollController.disableScroll()
+      setTimeout(() => closePopup(), 2000)
     })
-    .catch((err) => console.log(err))
 
+    .catch((err) => {
+      console.log(err)
+      setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
+      scrollController.disableScroll()
+      setTimeout(() => closePopup(), 3000)
+      console.log(err)
+    })
+  }
+
+  function handleRegister(regFormValue, signupMessage) {
+    mainApi
+    .register(regFormValue)
+    .then(() => {
+      handleLogin(regFormValue, signupMessage)
+    })
+    .catch((err) => {
+      console.log(err)
+      setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
+      setTimeout(() => closePopup(), 3000)
+      console.log(err)
+    })
+  }
+
+  function handleSignOutConfirmation() {
+    setInfoTooltipState({ isOpen: true, text: 'Вы уверены?', image: ConfirmIcon, btn: true })
+  }
+
+  function handleSignOut() {
+    setIsLoggedIn(false)
+    localStorage.removeItem('loggedIn')
+    setInfoTooltipState({ isOpen: false, text: '', image: '' })
+    mainApi.signout()
+    .then(() => {
+      navigate('/', { replace: true })
+    })
   }
 
   return (
@@ -107,10 +144,13 @@ function App() {
                 />}
               />
             </Route>
-
-            <Route path="/profile"
-                   element={<Profile />} />
-
+            <Route path="/profile" element={
+              <ProtectedRouteElement
+                element={Profile}
+                isLoggedIn={isLoggedIn}
+                onSignOut={handleSignOutConfirmation}
+              />}
+            />
             <Route path="/signin" element={
               <ProtectedRouteElement
                 element={Login}
@@ -118,21 +158,20 @@ function App() {
                 onLogin={handleLogin}
               />}
             />
-
             <Route path="/signup" element={
               <ProtectedRouteElement
                 element={Register}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={!isLoggedIn}
+                onRegister={handleRegister}
               />}
             />
-
-
-            {/*<Route path="/signin" element={<Login*/}
-            {/*  onLogin={handleLogin}*/}
-            {/*/>} />*/}
-            {/*<Route path="/signup" element={<Register />} />*/}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          <InfoTooltip
+            state={infoTooltipState}
+            onClose={closePopup}
+            onConfirmBtnClick={handleSignOut}
+          />
         </div>
       </div>
     </CurrentUserContext.Provider>

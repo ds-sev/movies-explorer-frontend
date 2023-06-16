@@ -1,12 +1,8 @@
 import SignPage from '../SignPage/SignPage'
 import { useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
-import { useNavigate } from 'react-router-dom'
-import mainApi from '../../utils/MainApi'
 
 function Login({ onLogin }) {
-
-  const navigate = useNavigate()
 
   const [isSignError, setIsSignError] = useState(false)
 
@@ -14,9 +10,8 @@ function Login({ onLogin }) {
     useFormWithValidation()
 
   const handleSubmit = (evt) => {
-    // setFormValues({email: values.email, password: values.password})
     evt.preventDefault()
-    onLogin(values)
+    onLogin(values, 'Успешный вход')
   }
 
   return (
