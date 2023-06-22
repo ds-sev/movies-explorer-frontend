@@ -1,11 +1,15 @@
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
 
-function SavedMovies() {
+function SavedMovies({moviesList, onLikeClick}) {
+  console.log(moviesList)
   return (
     <>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList
+         moviesList={moviesList}
+         onLikeClick={onLikeClick}
+      />
     </>
   )
 }

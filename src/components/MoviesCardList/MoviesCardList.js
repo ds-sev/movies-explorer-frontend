@@ -4,7 +4,7 @@ import Preloader from '../Preloader/Preloader'
 import { useEffect, useState } from 'react'
 import { getMovies } from '../../utils/MoviesApi'
 
-function MoviesCardList({children}) {
+function MoviesCardList({onLikeClick, onLikeRemoveClick, moviesList}) {
 
   const [isPreloaderActive, setIsPreloaderActive] = useState(false)
 
@@ -12,47 +12,35 @@ function MoviesCardList({children}) {
     setTimeout(() => setIsPreloaderActive(true), 1000)
   }, [])
 
-  // const filteredNames = []
-  //
-  // function handleGetMovies() {
-  //   getMovies()
-  //   .then((movies) => {
-  //     filteredNames = movies.filter(('а') => {
-  //       return filteredNames
-  //     }
-  //     // data.forEach((item) => {
-  //     //   filteredNames = item.map
-  //     //   item.map()
-  //       // item.nameRU.filter((nameRU => nameRU.includes('а')).map(filteredMovies => {
-  //       //   console.log(filteredMovies)
-  //
-  //
-  //
-  //
-  //
-  //   })
-  // }
-
-  // handleGetMovies()
-
   return (
     <>
       {!isPreloaderActive ? (
         <Preloader />
       ) : (
         <section className="movie-card-section _wrapper">
-          {/*<ul className="movie-card-section__list">*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*  <li className="movie-card-section__list-item"><MoviesCard /></li>*/}
-          {/*</ul>*/}
-          {children}
+          <div className="movie-card-section__list">
+            {
+              // Array.isArray(moviesList)
+               moviesList.length
+                ? moviesList.map((movie) => (
+                  <MoviesCard
+                    movie={movie}
+                    key={movie.id || movie._id}
+                    // title={movie.nameRU}
+                    // duration={movie.duration}
+                    // image={`https://api.nomoreparties.co/` + movie.image.url}
+                    onLikeClick={onLikeClick}
+                    // onLikeRemoveClick={onLikeRemoveClick}
+                    // isLiked={movie.isLiked}
+                  />
+
+                ))
+                : <div>
+                <div className="movie-card-section__not-found-movies"></div>
+                <span>Ничего не найдено</span>
+                </div>
+            }
+          </div>
           <button className="movie-card-section__view-more _button">Еще</button>
         </section>
       )}

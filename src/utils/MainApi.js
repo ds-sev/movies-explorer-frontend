@@ -2,8 +2,9 @@
 // import { checkResponse } from './checkResponse'
 
 class MainApi {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl, filmsBaseUrl, headers }) {
     this._baseUrl = baseUrl
+    this._filmsBaseUrl = filmsBaseUrl
     this._headers = headers
   }
 
@@ -79,7 +80,7 @@ class MainApi {
 
 
   getMyMovies() {
-    return fetch(`${this._baseUrl}/movies/`, {
+    return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
@@ -87,12 +88,46 @@ class MainApi {
     .then(this._checkResponse)
   }
 
+  addMovie(movieData) {
+    return fetch(`${this._baseUrl}/movies/`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify({
+        id: movieData.id,
+        nameRU: movieData.nameRU,
+        nameEN: movieData.nameEN,
+        director: movieData.director,
+        country: movieData.country,
+        year: movieData.year,
+        duration: movieData.duration,
+        description: movieData.description,
+        trailerLink: movieData.trailerLink,
+        image: `${this._filmsBaseUrl}${movieData.image.url}`,
+        thumbnail: `${this._filmsBaseUrl}${movieData.image.url}`,
+      }),
+    })
+    .then(this._checkResponse)
+  }
+
+  removeMovie(movieData) {
+    return fetch(`${this._baseUrl}/movies/${movieData.id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then(this._checkResponse)
+  }
+
+
+
 
 }
 
 const mainApi = new MainApi({
   // baseUrl: 'http://localhost:4200',
   baseUrl: 'https://api.movies-ex.nomoredomains.rocks',
+  filmsBaseUrl: 'https://api.nomoreparties.co',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
