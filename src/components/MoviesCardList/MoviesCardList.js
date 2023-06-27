@@ -8,6 +8,8 @@ function MoviesCardList({onLikeClick, checkIsLikedMovie, moviesList}) {
 
   const [isPreloaderActive, setIsPreloaderActive] = useState(false)
 
+
+
   useEffect(() => {
     setTimeout(() => setIsPreloaderActive(true), 1000)
   }, [])

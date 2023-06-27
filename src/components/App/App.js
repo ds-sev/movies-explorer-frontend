@@ -27,8 +27,6 @@ function App() {
   //elements states
   //sign states
 
-
-
   const [currentUser, setCurrentUser] = useState({})
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -55,12 +53,11 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       Promise.all([mainApi.getUserInfo(), mainApi.getMyMovies()])
-      .then(([userData, likedMovies]) => {
+      .then(([userData, moviesData]) => {
         setCurrentUser(userData)
-        setLikedMoviesList(likedMovies)
+        updateLikedMoviesList(moviesData)
+        })
 
-
-      })
       .catch((err) => console.log(err))
     }
   }, [isLoggedIn])
@@ -138,29 +135,24 @@ function App() {
 
   const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('allMovies')) || [])
 
-
-
   const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || [])
-
 
   const [filteredLikedMovies, setFilteredLikedMovies] = useState([])
   const [filteredShortMovies, setFilteredShortMovies] = useState(JSON.parse(localStorage.getItem('filteredShortMovies')))
 
-  const [isLikedMovie, setIsLikedMovie] = useState(false)
+  // const [likedMoviesList, setLikedMoviesList] = useState(JSON.parse(localStorage.getItem('likedMovies')) || [])
   const [likedMoviesList, setLikedMoviesList] = useState([])
-
 
   const [allMoviesQuery, setAllMoviesQuery] = useState('')
 
   const [tempQuery, setTempQuery] = useState('')
-
 
   const location = useLocation()
 
 
   useEffect(() => {
     getMyMovies()
-    console.log('switch is active')
+    console.log(likedMoviesList)
     isShortMoviesSwitchActive
       ? updateFilteredMoviesList(filteredShortMovies)
       : updateFilteredMoviesList(filteredMovies)
@@ -168,34 +160,35 @@ function App() {
 
   useEffect(() => {
     isShortMoviesSwitchActive
-   ? updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredShortMovies')))
-   : updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredMovies')))
+      ? updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredShortMovies')))
+      : updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredMovies')))
   }, [likedMoviesList])
 
   function getMyMovies() {
     mainApi.getMyMovies()
     .then((movies) => {
       updateLikedMoviesList(movies)
-
     })
   }
 
-
-
   function onLikeClick(movie, isLiked) {
+    console.log(isLiked)
     // console.log(movie, isLiked)
     isLiked
       ? addLikedMovie(movie)
 
       : removeLikedMovie(movie)
+
     // isLiked ? setLike(movie) : deleteLike(movie)
   }
 
   function updateLikedMoviesList(movies) {
     const likedMovies = movies.map(movie => ({ ...movie, isLiked: true }))
     setLikedMoviesList(likedMovies)
-    localStorage.setItem('likedMovies', likedMovies)
+    // localStorage.setItem('likedMovies', JSON.stringify(likedMovies))
   }
+
+
 
   function updateFilteredMoviesList(movies) {
     const updatedFilteredMoviesProperties = movies.map(movie => ({
@@ -218,14 +211,9 @@ function App() {
     localStorage.setItem('filteredLikedMovies', JSON.stringify(likedMovies))
   }
 
-  // function checkIsLikedMovie(movie) {
-  //   return likedMoviesList.some(i => i.movieId === movie.id)
-  // }
-
   function checkIsLikedMovie(movie) {
     return likedMoviesList.some((i) => i.movieId === movie.id)
   }
-
 
   function addLikedMovie(movie) {
     mainApi.addMovie(movie)
@@ -270,7 +258,6 @@ function App() {
     setFilteredShortMovies(filteredShortMovies)
   }
 
-
   function filterMoviesByDurationInResult() {
     const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 60)
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
@@ -281,10 +268,6 @@ function App() {
   // function handleShortMoviesSearch() {
   //
   // }
-
-
-
-
 
   const notInitialRender = useRef(false)
 
@@ -300,7 +283,6 @@ function App() {
     } else {
       notInitialRender.current = true
     }
-
 
     // if (location.pathname === '/movies' && localStorage.getItem('allMoviesSearchQuery')) {
     //   handleMoviesSearch(localStorage.getItem('allMoviesSearchQuery'))
