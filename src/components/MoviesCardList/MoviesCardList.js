@@ -4,7 +4,7 @@ import Preloader from '../Preloader/Preloader'
 import { useEffect, useState } from 'react'
 import { getMovies } from '../../utils/MoviesApi'
 
-function MoviesCardList({onLikeClick, onLikeRemoveClick, moviesList}) {
+function MoviesCardList({onLikeClick, checkIsLikedMovie, moviesList}) {
 
   const [isPreloaderActive, setIsPreloaderActive] = useState(false)
 
@@ -21,7 +21,7 @@ function MoviesCardList({onLikeClick, onLikeRemoveClick, moviesList}) {
           <div className="movie-card-section__list">
             {
               // Array.isArray(moviesList)
-               moviesList.length
+               moviesList
                 ? moviesList.map((movie) => (
                   <MoviesCard
                     movie={movie}
@@ -32,6 +32,7 @@ function MoviesCardList({onLikeClick, onLikeRemoveClick, moviesList}) {
                     onLikeClick={onLikeClick}
                     // onLikeRemoveClick={onLikeRemoveClick}
                     // isLiked={movie.isLiked}
+                    // checkIsLikedMovie={checkIsLikedMovie}
                   />
 
                 ))

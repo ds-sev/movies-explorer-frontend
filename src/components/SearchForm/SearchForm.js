@@ -1,63 +1,48 @@
 import './SearchForm.css'
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox'
 import { useEffect, useState } from 'react'
-import { useFormWithValidation } from '../../hooks/useFormWithValidation'
-import { useForm } from '../../hooks/useForm'
-import { getMovies } from '../../utils/MoviesApi'
-import movies from '../Movies/Movies'
+import { useLocation } from 'react-router-dom'
 
 function SearchForm(props) {
 
-  // useEffect(() => {
-  //   console.log(props.query)
-  // }, [])
+  // const [q, setQ] = useState(props.query || '')
+  const [query, setQuery] = useState('')
 
-  // const [searchText, setSearchText] = useState(searchText)
-  // const { values, handleChange } =
-  //   useForm()
 
-  // const [query, setQuery] = useState('' || localStorage.getItem('filterQuery'))
+  const location = useLocation()
 
-  const [allMovies, setAllMovies] = useState([])
-
-  const [isShortMoviesSelect, setIsShortMoviesSelect] = useState(false)
+  useEffect(() => {
+    if (location.pathname === '/movies' && localStorage.getItem('allMoviesSearchQuery')) {
+      setQuery(localStorage.getItem('allMoviesSearchQuery'))
+    } else if(location.pathname === '/saved-movies' && localStorage.getItem('savedMoviesSearchQuery')) {
+      setQuery(localStorage.getItem('savedMoviesSearchQuery'))
+    }
+   }, [location.pathname])
 
   function handleChange(evt) {
-    props.setQuery(evt.target.value)
+    setQuery(evt.target.value)
+    props.tempQuery(evt.target.value)
   }
 
-  function handleSearchBtnClick(evt) {
+  function onSubmit(evt) {
     evt.preventDefault()
-    if (props.query === '') {
-      console.log('Нужно ввести ключевое слово')
-    } else if (allMovies.length === 0 && localStorage.getItem('allMovies')) {
-      // getAllMovies()
-      console.log('primary load')
-    } else {
-      console.log('secondary load')
-    }
-
+    props.onSearch(query)
   }
-
-  // function searchMovies(query) {
-  //   localStorage.setItem('filterQuery', query)
-  //   // console.log(query)
-  //   localStorage.setItem('shortMovies', isShortMoviesSelect)
-  // }
 
   return (
     <div className="_wrapper">
       <section className="search">
-        <form className="search__form" name="search">
+        <form className="search__form" name="search" onSubmit={onSubmit}>
           <input className="search__input"
                  name="query"
-                 value={props.query || ''}
+                 // value={props.query || ''}
+                 value={query || ''}
                  onChange={handleChange}
                  type="text"
                  placeholder="Фильм"
           />
           <span className="search__error"></span>
-          <button className="search__button _button" onClick={props.onSearch}></button>
+          <button className="search__button _button"></button>
         </form>
         <FilterCheckbox
           shortMoviesSwitch={props.shortMoviesSwitch}

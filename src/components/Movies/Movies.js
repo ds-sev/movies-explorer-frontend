@@ -8,6 +8,8 @@ function Movies(props) {
 
   // console.log(props.shortMoviesSwitch)
 
+
+
   function clearAllData() {
     localStorage.removeItem('allMovies')
   }
@@ -16,15 +18,18 @@ function Movies(props) {
 
   return (
     <>
-      <SearchForm query={props.query || ''}
-                  setQuery={props.setQuery}
+      <SearchForm
                   shortMoviesSwitch={props.shortMoviesSwitch}
                   setShortMoviesSwitch={props.setShortMoviesSwitch}
                   onSearch={props.onMoviesSearch}
+
+                  tempQuery={props.setTempQuery}
+
       />
       <MoviesCardList
         moviesList={props.moviesList}
         onLikeClick={props.onLikeClick}
+        // checkIsLikedMovie={props.checkIsLikedMovie}
         // onLikeRemoveClick={props.onLikeRemoveClick}
         // shortMoviesList={props.shortMoviesList}
       />

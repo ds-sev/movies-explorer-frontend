@@ -4,9 +4,11 @@ import exampleCardImagePath from '../../images/movie_example/movie_card_pic.jpg'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-function MoviesCard({ movie, onLikeClick, onLikeRemoveClick }) {
+function MoviesCard({ movie, onLikeClick, checkIsLikedMovie }) {
 
   const { isLiked } = movie
+
+
 
   const { pathname } = useLocation()
 
@@ -30,15 +32,15 @@ function MoviesCard({ movie, onLikeClick, onLikeRemoveClick }) {
         <div className="movie-card__like-container">
           {pathname === '/movies'
             ? (
-              !movie.isLiked ?
-                (
+              // movie.isLiked ?
+              //   (
                   <button className={movieLikeButtonClassName}
                           onClick={handleLikeClick}
                           type="button"
                           aria-label="избранное"></button>
-                ) : (
-                  <button className="">Удоли</button>
-                )
+                // ) : (
+                //   <button className="">Удоли</button>
+                // )
             )
             : <button className="movie-card__delete _button"
                       onClick={handleLikeClick}
