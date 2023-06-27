@@ -14,14 +14,14 @@ function SearchForm(props) {
   useEffect(() => {
     if (location.pathname === '/movies' && localStorage.getItem('allMoviesSearchQuery')) {
       setQuery(localStorage.getItem('allMoviesSearchQuery'))
-    } else if(location.pathname === '/saved-movies' && localStorage.getItem('savedMoviesSearchQuery')) {
-      setQuery(localStorage.getItem('savedMoviesSearchQuery'))
+    } else if(location.pathname === '/saved-movies') {
+      setQuery('')
     }
-   }, [location.pathname])
+   }, [location])
 
   function handleChange(evt) {
     setQuery(evt.target.value)
-    props.tempQuery(evt.target.value)
+    // props.tempQuery(evt.target.value)
   }
 
   function onSubmit(evt) {

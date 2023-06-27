@@ -8,8 +8,6 @@ function MoviesCard({ movie, onLikeClick, checkIsLikedMovie }) {
 
   const { isLiked } = movie
 
-  console.log(movie)
-
   const { pathname } = useLocation()
 
   const movieLikeButtonClassName = `movie-card__like _button ${isLiked && 'movie-card__like_active'}`

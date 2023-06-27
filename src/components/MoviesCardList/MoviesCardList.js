@@ -14,6 +14,8 @@ function MoviesCardList({onLikeClick, checkIsLikedMovie, moviesList}) {
     setTimeout(() => setIsPreloaderActive(true), 1000)
   }, [])
 
+
+
   return (
     <>
       {!isPreloaderActive ? (
@@ -23,7 +25,7 @@ function MoviesCardList({onLikeClick, checkIsLikedMovie, moviesList}) {
           <div className="movie-card-section__list">
             {
               // Array.isArray(moviesList)
-               moviesList
+               moviesList.length
                 ? moviesList.map((movie) => (
                   <MoviesCard
                     movie={movie}

@@ -17,20 +17,29 @@ import SuccessIcon from '../../images/icons/ok.svg'
 import FailIcon from '../../images/icons/not_ok.svg'
 import ConfirmIcon from '../../images/icons/confirm.svg'
 import { getMovies } from '../../utils/MoviesApi'
-import login from '../Login/Login'
-import movies from '../Movies/Movies'
 
-//TODO: errors popups!!!
 function App() {
   /* STATES */
-  //popups states
-  //elements states
-  //sign states
-
+  // sign
   const [currentUser, setCurrentUser] = useState({})
-
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [infoTooltipState, setInfoTooltipState] = useState({ isOpen: false, text: '', image: '' })
+
+  // movies
+  const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('allMovies')) || [])
+  const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || [])
+  const [filteredShortMovies, setFilteredShortMovies] = useState(JSON.parse(localStorage.getItem('filteredShortMovies')))
+  const [isShortMoviesSwitchActive, setIsShortMoviesSwitchActive]
+    = useState(localStorage.getItem('shortMoviesSwitch'))
+
+  // saved movies
+  const [likedMoviesList, setLikedMoviesList] = useState([])
+  const [filteredLikedMovies, setFilteredLikedMovies] = useState([])
+  const [likedMoviesToRender, setLikedMoviesToRender] = useState([])
+  const [isShortSavedMoviesSwActive, setIsShortSavedMoviesSwActive] = useState(false)
+
+  const location = useLocation()
+  const navigate = useNavigate()
 
   function closePopup() {
     setInfoTooltipState({ isOpen: false, text: '', image: '' })
@@ -46,8 +55,6 @@ function App() {
     }
   }
 
-  const navigate = useNavigate()
-
   useEffect(() => checkAuth(), [])
 
   useEffect(() => {
@@ -56,7 +63,8 @@ function App() {
       .then(([userData, moviesData]) => {
         setCurrentUser(userData)
         updateLikedMoviesList(moviesData)
-        })
+        localStorage.setItem('likedMovies', JSON.stringify(moviesData))
+      })
 
       .catch((err) => console.log(err))
     }
@@ -126,33 +134,14 @@ function App() {
     })
   }
 
-  ///////////////MMMMMMMOOOOOVVVVVVIIIIIEEEESSSSSS
-
-  // const [query, setQuery] = useState(localStorage.getItem('globalSearchQuery'))
-
-  const [isShortMoviesSwitchActive, setIsShortMoviesSwitchActive]
-    = useState(localStorage.getItem('shortMoviesSwitch'))
-
-  const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('allMovies')) || [])
-
-  const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || [])
-
-  const [filteredLikedMovies, setFilteredLikedMovies] = useState([])
-  const [filteredShortMovies, setFilteredShortMovies] = useState(JSON.parse(localStorage.getItem('filteredShortMovies')))
-
-  // const [likedMoviesList, setLikedMoviesList] = useState(JSON.parse(localStorage.getItem('likedMovies')) || [])
-  const [likedMoviesList, setLikedMoviesList] = useState([])
-
-  const [allMoviesQuery, setAllMoviesQuery] = useState('')
-
-  const [tempQuery, setTempQuery] = useState('')
-
-  const location = useLocation()
-
+  useEffect(() => {
+    if (location.pathname === '/saved-movies') {
+      setLikedMoviesToRender(likedMoviesList)
+    }
+  }, [location])
 
   useEffect(() => {
     getMyMovies()
-    console.log(likedMoviesList)
     isShortMoviesSwitchActive
       ? updateFilteredMoviesList(filteredShortMovies)
       : updateFilteredMoviesList(filteredMovies)
@@ -172,23 +161,10 @@ function App() {
   }
 
   function onLikeClick(movie, isLiked) {
-    console.log(isLiked)
-    // console.log(movie, isLiked)
     isLiked
       ? addLikedMovie(movie)
-
       : removeLikedMovie(movie)
-
-    // isLiked ? setLike(movie) : deleteLike(movie)
   }
-
-  function updateLikedMoviesList(movies) {
-    const likedMovies = movies.map(movie => ({ ...movie, isLiked: true }))
-    setLikedMoviesList(likedMovies)
-    // localStorage.setItem('likedMovies', JSON.stringify(likedMovies))
-  }
-
-
 
   function updateFilteredMoviesList(movies) {
     const updatedFilteredMoviesProperties = movies.map(movie => ({
@@ -206,9 +182,14 @@ function App() {
     }
   }
 
+  function updateLikedMoviesList(movies) {
+    const likedMovies = movies.map(movie => ({ ...movie, isLiked: true }))
+    setLikedMoviesList(likedMovies)
+    setLikedMoviesToRender(likedMovies)
+  }
+
   function updateFilteredLikedMoviesList(likedMovies) {
     setFilteredLikedMovies(likedMovies)
-    localStorage.setItem('filteredLikedMovies', JSON.stringify(likedMovies))
   }
 
   function checkIsLikedMovie(movie) {
@@ -236,38 +217,42 @@ function App() {
       updateFilteredLikedMoviesList(newFilteredLikedMoviesList)
     })
     .catch((err) => console.log(err))
-
   }
 
-//
-
   function filterMoviesByQuery(query) {
-    const filteredMovies = allMovies.filter((movie) =>
-      movie.nameRU.toLowerCase().indexOf(query) >= 0)
-    localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies))
-    setFilteredMovies(filteredMovies)
-    // updateFilteredMoviesList(filteredMovies)
+    if (location.pathname === '/saved-movies') {
+      const filteredLikedMovies = likedMoviesList.filter((movie) =>
+        movie.nameRU.toLowerCase().indexOf(query) >= 0)
+      if (isShortSavedMoviesSwActive) {
+        const filteredShortLikedMovies = filteredLikedMovies.filter((movie) =>
+          movie.duration < 40)
+        setLikedMoviesToRender(filteredShortLikedMovies)
+      } else {
+
+        setLikedMoviesToRender(filteredLikedMovies)
+      }
+    } else {
+      const filteredMovies = allMovies.filter((movie) =>
+        movie.nameRU.toLowerCase().indexOf(query) >= 0)
+      localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies))
+      setFilteredMovies(filteredMovies)
+      updateFilteredMoviesList(filteredMovies)
+    }
   }
 
   function filterMoviesByQueryAndDuration(query) {
-
     const filteredMovies = allMovies.filter((movie) =>
       movie.nameRU.toLowerCase().indexOf(query) >= 0)
-    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 60)
+    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 40)
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
-    setFilteredShortMovies(filteredShortMovies)
+    updateFilteredMoviesList(filteredShortMovies)
   }
 
   function filterMoviesByDurationInResult() {
-    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 60)
+    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 40)
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
     setFilteredShortMovies(filteredShortMovies)
-    // updateFilteredMoviesList(filteredShortMovies)
   }
-
-  // function handleShortMoviesSearch() {
-  //
-  // }
 
   const notInitialRender = useRef(false)
 
@@ -284,64 +269,57 @@ function App() {
       notInitialRender.current = true
     }
 
-    // if (location.pathname === '/movies' && localStorage.getItem('allMoviesSearchQuery')) {
-    //   handleMoviesSearch(localStorage.getItem('allMoviesSearchQuery'))
-    // } else if(location.pathname === '/saved-movies' && localStorage.getItem('savedMoviesSearchQuery')) {
-    //   handleMoviesSearch(localStorage.getItem('savedMoviesSearchQuery'))
-    // }
   }, [isShortMoviesSwitchActive])
 
-  // useEffect(() => {
-  //   // console.log('click')
-  // }, [filterMoviesByQuery])
+  useEffect(() => {
+    if (isShortSavedMoviesSwActive) {
+      const shortMovies = likedMoviesToRender.filter((movie) => movie.duration < 40)
+      setLikedMoviesToRender(shortMovies)
+    } else {
+      setLikedMoviesToRender(likedMoviesList)
+    }
+  }, [isShortSavedMoviesSwActive])
 
   function handleMoviesSearch(query) {
-    console.log(query)
-    // evt.preventDefault()
     // if search query contains at least 1 symbol:
     if (query.length) {
-      // save this search query
-      localStorage.setItem('allMoviesSearchQuery', query)
-      // check for movies obj in local state
-      if (allMovies.length === 0) {
-        // if local state is empty get all movies from Beatfilms base and save it to local storage
-        getMovies()
-        .then((movies) => {
-          console.log(movies)
-          localStorage.setItem('allMovies', JSON.stringify(movies))
-          setAllMovies(movies)
-        })
-        .then(() => {
+      if (location.pathname === '/saved-movies') {
+        filterMoviesByQuery(query)
+      } else {
+        // save this search query
+        localStorage.setItem('allMoviesSearchQuery', query)
+        // check for movies obj in local state
+        if (allMovies.length === 0) {
+          // if local state is empty get all movies from Beatfilms base and save it to local storage
+          getMovies()
+          .then((movies) => {
+            localStorage.setItem('allMovies', JSON.stringify(movies))
+            setAllMovies(movies)
+          })
+          .then(() => {
+            if (isShortMoviesSwitchActive) {
+              filterMoviesByQueryAndDuration(query)
+            } else {
+              filterMoviesByQuery(query)
+            }
+          })
+          // in another case perform search in local state
+        } else {
           if (isShortMoviesSwitchActive) {
             filterMoviesByQueryAndDuration(query)
           } else {
             filterMoviesByQuery(query)
           }
-        })
-        // in another case perform search in local state
-      } else {
-        if (isShortMoviesSwitchActive) {
-          filterMoviesByQueryAndDuration(query)
-          // filterMoviesByQuery(query)
-        } else {
-          filterMoviesByQuery(query)
         }
-
-      }
-      if (filteredMovies.length === 0) {
-        console.log('Ничего не найдено')
+        if (filteredMovies.length === 0) {
+          console.log('Ничего не найдено')
+        }
       }
     } else {
       setInfoTooltipState({ isOpen: true, text: 'Нужно ввести ключевое слово', image: FailIcon })
       setTimeout(() => closePopup(), 2000)
     }
   }
-
-  // useEffect(() => {
-  //   isShortMoviesSwitchActive
-  //     ? updateFilteredMoviesList(filteredShortMovies)
-  //     : updateFilteredMoviesList(filteredMovies)
-  // }, [])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -354,23 +332,23 @@ function App() {
                 <ProtectedRouteElement
                   element={Movies}
                   isLoggedIn={isLoggedIn}
-                  // query={query}
-                  // setQuery={setQuery}
                   shortMoviesSwitch={isShortMoviesSwitchActive}
                   setShortMoviesSwitch={setIsShortMoviesSwitchActive}
                   onMoviesSearch={handleMoviesSearch}
                   moviesList={isShortMoviesSwitchActive ? filteredShortMovies : filteredMovies}
                   onLikeClick={onLikeClick}
-                  // checkIsLikedMovie={checkIsLikedMovie}
-                  setTempQuery={setTempQuery}
                 />}
               />
               <Route path="saved-movies" element={
                 <ProtectedRouteElement
                   element={SavedMovies}
                   isLoggedIn={isLoggedIn}
-                  moviesList={likedMoviesList}
+                  moviesList={likedMoviesToRender}
+                  setMoviesList={setLikedMoviesList}
                   onLikeClick={onLikeClick}
+                  onMoviesSearch={handleMoviesSearch}
+                  shortMoviesSwitch={isShortSavedMoviesSwActive}
+                  setShortMoviesSwitch={setIsShortSavedMoviesSwActive}
                 />}
               />
             </Route>
