@@ -1,7 +1,5 @@
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
-import { useEffect } from 'react'
-import mainApi from '../../utils/MainApi'
 
 function SavedMovies(props) {
 
