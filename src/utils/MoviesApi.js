@@ -1,4 +1,3 @@
-// описание запросов к сервису beatfilm-movies
 import { checkResponse } from './checkResponse'
 
 const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies'

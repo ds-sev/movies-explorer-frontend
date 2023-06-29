@@ -41,15 +41,14 @@ function App() {
   // other
   const [isLoading, setIsLoading] = useState(false)
 
+  /* HOOKS */
   const location = useLocation()
   const navigate = useNavigate()
   const notInitialRender = useRef(false)
 
-  function closePopup() {
-    setInfoTooltipState({ isOpen: false, text: '', image: '' })
-    scrollController.enableScroll()
-  }
 
+  /* FUNCTIONS */
+  //global
   const scrollController = {
     disableScroll() {
       document.body.style.cssText = `overflow: hidden`
@@ -58,6 +57,13 @@ function App() {
       document.body.style.cssText = ''
     }
   }
+
+  function closePopup() {
+    setInfoTooltipState({ isOpen: false, text: '', image: '' })
+    scrollController.enableScroll()
+  }
+
+  //sign
 
   useEffect(() => checkAuth(), [])
 
@@ -129,7 +135,6 @@ function App() {
   }
 
   function handleProfileEdit(values) {
-    console.log(values)
     mainApi
     .editUserInfo(values)
     .then((userData) => {
@@ -166,6 +171,7 @@ function App() {
     .catch(err => console.log(err))
   }
 
+  //movies
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
       setLikedMoviesToRender(likedMoviesList)

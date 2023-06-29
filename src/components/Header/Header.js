@@ -72,9 +72,11 @@ function Header() {
             <ul className="header__nav-links-container">
               <li className="header__nav-link" onClick={handleCloseBurgerClick}>
                 <Link to="/">Главная</Link></li>
-              <li className={`header__nav-link ${location.pathname === '/movies' && 'header__nav-link_active'}`} onClick={handleCloseBurgerClick}>
+              <li className={`header__nav-link ${location.pathname === '/movies' && 'header__nav-link_active'}`}
+                  onClick={handleCloseBurgerClick}>
                 <Link to="/movies">Фильмы</Link></li>
-              <li className={`header__nav-link ${location.pathname === '/saved-movies' && 'header__nav-link_active'}`} onClick={handleCloseBurgerClick}>
+              <li className={`header__nav-link ${location.pathname === '/saved-movies' && 'header__nav-link_active'}`}
+                  onClick={handleCloseBurgerClick}>
                 <Link to="/saved-movies">Сохраненные фильмы</Link></li>
             </ul>
             <Link to="/profile"

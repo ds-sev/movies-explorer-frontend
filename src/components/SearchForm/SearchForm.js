@@ -5,11 +5,9 @@ import { useLocation } from 'react-router-dom'
 
 function SearchForm(props) {
 
-  // const [q, setQ] = useState(props.query || '')
-  const [query, setQuery] = useState('')
-
-
   const location = useLocation()
+
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     if (location.pathname === '/movies' && localStorage.getItem('allMoviesSearchQuery')) {
@@ -21,7 +19,6 @@ function SearchForm(props) {
 
   function handleChange(evt) {
     setQuery(evt.target.value)
-    // props.tempQuery(evt.target.value)
   }
 
   function onSubmit(evt) {
@@ -35,7 +32,6 @@ function SearchForm(props) {
         <form className="search__form" name="search" onSubmit={onSubmit}>
           <input className="search__input"
                  name="query"
-                 // value={props.query || ''}
                  value={query || ''}
                  onChange={handleChange}
                  type="text"

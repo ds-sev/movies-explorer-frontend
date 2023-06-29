@@ -1,7 +1,7 @@
 import './MoviesCard.css'
 import { useLocation } from 'react-router-dom'
 
-function MoviesCard({ movie, onLikeClick, checkIsLikedMovie }) {
+function MoviesCard({ movie, onLikeClick }) {
   const { isLiked } = movie
   const { pathname } = useLocation()
   const movieLikeButtonClassName = `movie-card__like _button ${isLiked && 'movie-card__like_active'}`

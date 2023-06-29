@@ -1,6 +1,3 @@
-// описание запросов к Api
-// import { checkResponse } from './checkResponse'
-
 class MainApi {
   constructor({ baseUrl, filmsBaseUrl, headers }) {
     this._baseUrl = baseUrl
@@ -37,17 +34,7 @@ class MainApi {
         password: userData.password,
       }),
     })
-    // .then(checkResponse)
-   //
-   //  .then((res) => {
-   //    // const response = res.body.toString()
-   //    // if (res.ok) {
-   //    //   return res.json()
-   //    // }
-   //    // return Promise.reject(`Ошибка ${res.status}`)
-   //    //
    .then(this._checkResponse)
-   //  })
   }
 
   signout() {
@@ -58,15 +45,6 @@ class MainApi {
     })
     .then(this._checkResponse)
   }
-
-  // checkToken() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: this._headers,
-  //     credentials: 'include',
-  //   }).then((res) => checkResponse(res))
-  //   .then(userData => userData)
-  // }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
@@ -90,7 +68,6 @@ class MainApi {
     })
     .then(this._checkResponse)
   }
-
 
   getMyMovies() {
     return fetch(`${this._baseUrl}/movies`, {
@@ -131,10 +108,6 @@ class MainApi {
     })
     .then(this._checkResponse)
   }
-
-
-
-
 }
 
 const mainApi = new MainApi({
@@ -147,13 +120,6 @@ const mainApi = new MainApi({
   },
   credentials: 'include'
 })
-
-// user
-
-
-// movies base
-
-
 
 export default mainApi
 

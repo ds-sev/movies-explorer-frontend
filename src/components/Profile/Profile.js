@@ -78,7 +78,7 @@ function Profile({ onSignOut, onProfileEdit }) {
                       onClick={handleProfileEditBtnClick}>Редактировать</button>
             ) : (
               <button className={`profile__save-button _button ${!isValid && 'profile__save-button_disabled'}`}
-                      >Сохранить</button>
+              >Сохранить</button>
             )}
         </form>
         {isProfileEditDisabled && (

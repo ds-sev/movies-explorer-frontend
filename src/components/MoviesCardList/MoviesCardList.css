@@ -4,7 +4,6 @@
   display: flex;
   row-gap: 80px;
   flex-direction: column;
-  
 }
 
 .movie-card-section__list {
@@ -59,7 +58,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 }
 
 .movie-card-section__not-found-image {
