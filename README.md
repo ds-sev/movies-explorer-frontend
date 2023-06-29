@@ -6,4 +6,6 @@ Frontend-часть дипломного проекта.
 
 Репозиторий: https://github.com/ds-sev/movies-explorer-frontend
 
-Ссылка на Pull-Request: https://github.com/ds-sev/movies-explorer-frontend/pull/2
+Готовый проект: https://movies-ex.nomoredomains.rocks/
+
+Pull-Request для ревью: https://github.com/ds-sev/movies-explorer-frontend/pull/2
