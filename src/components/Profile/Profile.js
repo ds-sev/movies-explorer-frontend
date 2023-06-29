@@ -3,45 +3,35 @@ import Header from '../Header/Header'
 import { useContext, useEffect, useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import { useLocation } from 'react-router-dom'
 
 function Profile({ onSignOut, onProfileEdit }) {
 
   const currentUser = useContext(CurrentUserContext)
-const location = useLocation()
-
-
-
-
+  const [isProfileEditDisabled, setIsProfileEditDisabled] = useState(true)
   const { values, handleChange, errors, isValid, setIsValid } =
     useFormWithValidation()
 
-  const [isProfileEditDisabled, setIsProfileEditDisabled] = useState(true)
+  useEffect(() => {
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false)
+    }
+  }, [values.name, values.email, currentUser.email, currentUser.name, setIsValid])
 
   const handleProfileEditBtnClick = () => setIsProfileEditDisabled(false)
-
   const onSignoutBtnClick = (evt) => {
     evt.preventDefault()
     onSignOut()
   }
-
-
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
     if (isValid) {
       onProfileEdit({
         userName: values.name ? values.name : currentUser.name,
-        userEmail: values.email ? values.email: currentUser.email
+        userEmail: values.email ? values.email : currentUser.email
       })
     }
   }
-
-  useEffect(() => {
-    if (values.name === currentUser.name && values.email === currentUser.email) {
-      setIsValid(false)
-    }
-  }, [values.name, values.email])
 
   return (
     <>
@@ -82,13 +72,14 @@ const location = useLocation()
             <span className="profile-input__error">{errors.email || ''}</span>
           </label>
           <div className="push"></div>
-          {isProfileEditDisabled ? (
-            <button className="profile__edit _button"
-                    onClick={handleProfileEditBtnClick}>Редактировать</button>
-          ) : (
-            <button className={`profile__save-button _button ${!isValid && 'profile__save-button_disabled'}`}
-                    onClick={handleSubmit}>Сохранить</button>
-          )}
+          {isProfileEditDisabled
+            ? (
+              <button className="profile__edit _button"
+                      onClick={handleProfileEditBtnClick}>Редактировать</button>
+            ) : (
+              <button className={`profile__save-button _button ${!isValid && 'profile__save-button_disabled'}`}
+                      >Сохранить</button>
+            )}
         </form>
         {isProfileEditDisabled && (
           <button className={`profile__signout _button`} onClick={onSignoutBtnClick}>Выйти из

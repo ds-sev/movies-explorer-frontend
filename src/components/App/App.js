@@ -67,10 +67,13 @@ function App() {
       .then(([userData, moviesData]) => {
         setCurrentUser(userData)
         setAllMovies(moviesData)
-        localStorage.setItem('allMovies', JSON.stringify(moviesData))
+        if (moviesData !== undefined) {
+          localStorage.setItem('allMovies', JSON.stringify(moviesData))
+        }
       })
       .catch((err) => console.log(err))
     } else {
+      // localStorage.clear()
     }
   }, [isLoggedIn])
 
@@ -86,6 +89,8 @@ function App() {
         localStorage.removeItem('loggedIn')
         console.log(err)
       })
+    } else {
+      localStorage.clear()
     }
   }
 
@@ -102,7 +107,6 @@ function App() {
       scrollController.disableScroll()
       setTimeout(() => closePopup(), 2000)
     })
-
     .catch((err) => {
       setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
       scrollController.disableScroll()
@@ -162,8 +166,6 @@ function App() {
     .catch(err => console.log(err))
   }
 
-  // localStorage.removeItem('filteredMovies')
-
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
       setLikedMoviesToRender(likedMoviesList)
@@ -177,7 +179,6 @@ function App() {
         ? updateFilteredMoviesList(filteredShortMovies)
         : updateFilteredMoviesList(filteredMovies)
     }
-
   }, [location])
 
   useEffect(() => {
@@ -337,7 +338,7 @@ function App() {
         })
         setTimeout(() => closePopup(), 2000)
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     } finally {
       setIsLoading(false)

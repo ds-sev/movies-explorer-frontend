@@ -1,10 +1,7 @@
 import SignPage from '../SignPage/SignPage'
-import { useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
 function Login({ onLogin }) {
-
-  const [isSignError, setIsSignError] = useState(false)
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
@@ -22,7 +19,6 @@ function Login({ onLogin }) {
               hintLink="/signup"
               onSubmit={handleSubmit}
               isValid={isValid}
-              isSignError={isSignError}
     >
       <fieldset className="sign__inputs-container">
         <label className="sign__input-container">E-mail

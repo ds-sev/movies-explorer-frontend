@@ -1,9 +1,6 @@
 import './FilterCheckbox.css'
-import Logo from '../../Logo/Logo'
-import { useEffect } from 'react'
 
 function FilterCheckbox(props) {
-
   function handleChange() {
     props.setShortMoviesSwitch(!props.shortMoviesSwitch)
   }
@@ -11,7 +8,11 @@ function FilterCheckbox(props) {
   return (
     <div className="checkbox">
       <label className="checkbox__container">
-        <input className="checkbox__input" type="checkbox" id="checkbox" defaultChecked={props.shortMoviesSwitch} onChange={handleChange} />
+        <input className="checkbox__input"
+               type="checkbox"
+               id="checkbox"
+               defaultChecked={props.shortMoviesSwitch}
+               onChange={handleChange} />
         <span className="checkbox__switch">Короткометражки</span>
       </label>
     </div>
