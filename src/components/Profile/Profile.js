@@ -10,18 +10,6 @@ function Profile({ onSignOut, onProfileEdit }) {
   const currentUser = useContext(CurrentUserContext)
 const location = useLocation()
 
-  // useEffect(() => {
-  //   setUserName(currentUser.name)
-  //   setUserEmail(currentUser.email)
-  // }, [currentUser])
-  //
-  // const [userName, setUserName] = useState('')
-  // const [userEmail, setUserEmail] = useState('')
-
-  // useEffect(() => {
-  //   setUserName(currentUser.name)
-  //   setUserEmail(currentUser.email)
-  // }, [currentUser])
 
 
 

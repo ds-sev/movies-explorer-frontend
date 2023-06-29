@@ -34,7 +34,7 @@ function App() {
 
   // saved movies
   const [likedMoviesList, setLikedMoviesList] = useState([])
-  const [filteredLikedMovies, setFilteredLikedMovies] = useState([])
+  const [filteredLikedMovies, setFilteredLikedMovies] = useState([{}])
   const [likedMoviesToRender, setLikedMoviesToRender] = useState([])
   const [isShortSavedMoviesSwActive, setIsShortSavedMoviesSwActive] = useState(false)
 
@@ -43,6 +43,7 @@ function App() {
 
   const location = useLocation()
   const navigate = useNavigate()
+  const notInitialRender = useRef(false)
 
   function closePopup() {
     setInfoTooltipState({ isOpen: false, text: '', image: '' })
@@ -129,12 +130,17 @@ function App() {
     .editUserInfo(values)
     .then((userData) => {
       setCurrentUser(userData)
-      setInfoTooltipState({ isOpen: true, text: 'Новые данные успешно сохранены!', image: SuccessIcon, btn: false })
+      setInfoTooltipState({
+        isOpen: true,
+        text: 'Новые данные успешно сохранены!',
+        image: SuccessIcon,
+        btn: false
+      })
       scrollController.disableScroll()
       setTimeout(() => closePopup(), 2000)
     })
     .catch((err) => {
-      setInfoTooltipState({ isOpen: true, text: 'Что-то пошло не так...', image: FailIcon })
+      setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
       setTimeout(() => closePopup(), 3000)
       console.log(err)
     })
@@ -165,15 +171,13 @@ function App() {
   }, [location])
 
   useEffect(() => {
-    // if (isLoggedIn)
     if (isLoggedIn) {
       getMyMovies()
       isShortMoviesSwitchActive
         ? updateFilteredMoviesList(filteredShortMovies)
         : updateFilteredMoviesList(filteredMovies)
-    } else {
-      // localStorage.clear()
     }
+
   }, [location])
 
   useEffect(() => {
@@ -260,7 +264,6 @@ function App() {
           movie.duration < 40)
         setLikedMoviesToRender(filteredShortLikedMovies)
       } else {
-
         setLikedMoviesToRender(filteredLikedMovies)
       }
     } else {
@@ -286,8 +289,6 @@ function App() {
     setFilteredShortMovies(filteredShortMovies)
   }
 
-  const notInitialRender = useRef(false)
-
   useEffect(() => {
     if (notInitialRender.current) {
       if (isShortMoviesSwitchActive) {
@@ -312,25 +313,32 @@ function App() {
     }
   }, [isShortSavedMoviesSwActive])
 
-async function handleMoviesSearch(query) {
+  async function handleMoviesSearch(query) {
+    const formattedQuery = query.toLowerCase()
     try {
       await setIsLoading(true)
       if (query.length) {
         setIsLoading(true)
         if (location.pathname === '/saved-movies') {
-          filterMoviesByQuery(query)
+          filterMoviesByQuery(formattedQuery)
         } else {
           localStorage.setItem('allMoviesSearchQuery', query)
           if (isShortMoviesSwitchActive) {
-            filterMoviesByQueryAndDuration(query)
+            filterMoviesByQueryAndDuration(formattedQuery)
           } else {
-            filterMoviesByQuery(query)
+            filterMoviesByQuery(formattedQuery)
           }
         }
       } else {
-        setInfoTooltipState({ isOpen: true, text: 'Нужно ввести ключевое слово', image: FailIcon })
+        setInfoTooltipState({
+          isOpen: true,
+          text: 'Нужно ввести ключевое слово',
+          image: FailIcon
+        })
         setTimeout(() => closePopup(), 2000)
       }
+    } catch(err) {
+      console.log(err)
     } finally {
       setIsLoading(false)
     }
