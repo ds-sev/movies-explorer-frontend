@@ -78,6 +78,19 @@ class MainApi {
     .then(userData => userData)
   }
 
+  editUserInfo(newData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify({
+        name: newData.userName,
+        email: newData.userEmail,
+      }),
+    })
+    .then(this._checkResponse)
+  }
+
 
   getMyMovies() {
     return fetch(`${this._baseUrl}/movies`, {

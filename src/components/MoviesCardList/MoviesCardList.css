@@ -53,15 +53,22 @@
   }
 }
 
-.movie-card-section__not-found-movies {
+.movie-card-section__not-found-container {
   margin: 0 auto;
-  text-align: center;
-  height: 300px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.movie-card-section__not-found-image {
+  margin-bottom: 20px;
+  width: 130px;
+  height: 130px;
   background-image: url('../../images/icons/cry.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  border: 1px solid red;
 }
 

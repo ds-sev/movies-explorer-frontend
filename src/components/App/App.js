@@ -2,7 +2,7 @@ import './App.css'
 import Main from '../Main/Main'
 import Movies from '../Movies/Movies'
 import Profile from '../Profile/Profile'
-import { json, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import SavedMovies from '../SavedMovies/SavedMovies'
 import Layout from '../Layout/Layout'
 import NotFoundPage from '../NotFoundPage/NotFoundPage'
@@ -17,7 +17,6 @@ import SuccessIcon from '../../images/icons/ok.svg'
 import FailIcon from '../../images/icons/not_ok.svg'
 import ConfirmIcon from '../../images/icons/confirm.svg'
 import { getMovies } from '../../utils/MoviesApi'
-import movies from '../Movies/Movies'
 
 function App() {
   /* STATES */
@@ -119,6 +118,23 @@ function App() {
     })
     .catch((err) => {
       setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
+      setTimeout(() => closePopup(), 3000)
+      console.log(err)
+    })
+  }
+
+  function handleProfileEdit(values) {
+    console.log(values)
+    mainApi
+    .editUserInfo(values)
+    .then((userData) => {
+      setCurrentUser(userData)
+      setInfoTooltipState({ isOpen: true, text: 'Новые данные успешно сохранены!', image: SuccessIcon, btn: false })
+      scrollController.disableScroll()
+      setTimeout(() => closePopup(), 2000)
+    })
+    .catch((err) => {
+      setInfoTooltipState({ isOpen: true, text: 'Что-то пошло не так...', image: FailIcon })
       setTimeout(() => closePopup(), 3000)
       console.log(err)
     })
@@ -357,6 +373,7 @@ async function handleMoviesSearch(query) {
                 element={Profile}
                 isLoggedIn={isLoggedIn}
                 onSignOut={handleSignOutConfirmation}
+                onProfileEdit={handleProfileEdit}
               />}
             />
             <Route path="/signin" element={

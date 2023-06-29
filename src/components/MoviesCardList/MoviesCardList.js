@@ -12,9 +12,8 @@ function MoviesCardList({ onLikeClick, isLoading, moviesList }) {
   const [numberOfMovies, setNumberOfMovies] = useState(12)
 
   useEffect(() => {
-    let timer
     const changeTimer = () => {
-      timer = setTimeout(changeNumberOfMoviesForRender, 1000)
+      setTimeout(changeNumberOfMoviesForRender, 1000)
     }
     window.addEventListener('resize', changeTimer)
   })
@@ -45,23 +44,25 @@ function MoviesCardList({ onLikeClick, isLoading, moviesList }) {
         <Preloader />
       ) : (
         <section className="movie-card-section _wrapper">
-          <div className="movie-card-section__list">
-            {
-              moviesList.length
-                ? moviesList.slice(0, numberOfMovies).map((movie) => (
+          {
+            moviesList.length
+              ?
+              <div className="movie-card-section__list">
+                {moviesList.slice(0, numberOfMovies).map((movie) => (
                   <MoviesCard
                     movie={movie}
                     key={movie.id || movie._id}
                     onLikeClick={onLikeClick}
                   />
-                ))
-                : <div>
-                  <div className="movie-card-section__not-found-movies"></div>
-                  <span>Ничего не найдено</span>
-                </div>
-            }
-          </div>
-          {location.pathname === '/movies' && moviesList.length >= 3 &&
+                ))}
+              </div>
+              :
+              <div className="movie-card-section__not-found-container">
+                <div className="movie-card-section__not-found-image"></div>
+                <span>Ничего не найдено</span>
+              </div>
+          }
+          {location.pathname === '/movies' && moviesList.length >= 3 && numberOfMovies < moviesList.length &&
             <button className="movie-card-section__view-more _button"
                     onClick={handleMoreMoviesView}
             >Еще</button>

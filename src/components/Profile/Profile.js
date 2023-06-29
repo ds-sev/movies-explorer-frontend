@@ -1,14 +1,31 @@
 import './Profile.css'
 import Header from '../Header/Header'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { useLocation } from 'react-router-dom'
 
-function Profile({ onSignOut }) {
+function Profile({ onSignOut, onProfileEdit }) {
 
   const currentUser = useContext(CurrentUserContext)
+const location = useLocation()
 
-  const { values, handleChange, errors, isValid } =
+  // useEffect(() => {
+  //   setUserName(currentUser.name)
+  //   setUserEmail(currentUser.email)
+  // }, [currentUser])
+  //
+  // const [userName, setUserName] = useState('')
+  // const [userEmail, setUserEmail] = useState('')
+
+  // useEffect(() => {
+  //   setUserName(currentUser.name)
+  //   setUserEmail(currentUser.email)
+  // }, [currentUser])
+
+
+
+  const { values, handleChange, errors, isValid, setIsValid } =
     useFormWithValidation()
 
   const [isProfileEditDisabled, setIsProfileEditDisabled] = useState(true)
@@ -20,9 +37,24 @@ function Profile({ onSignOut }) {
     onSignOut()
   }
 
+
+
   const handleSubmit = (evt) => {
     evt.preventDefault()
+    if (isValid) {
+      onProfileEdit({
+        userName: values.name ? values.name : currentUser.name,
+        userEmail: values.email ? values.email: currentUser.email
+      })
+    }
   }
+
+  useEffect(() => {
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false)
+    }
+  }, [values.name, values.email])
+
   return (
     <>
       <Header />
@@ -33,14 +65,14 @@ function Profile({ onSignOut }) {
             <span className="profile__field-description">Имя</span>
             <input
               className="profile__field-value"
-              value={values.name || currentUser.name}
+              value={values.name ?? currentUser.name}
               onChange={handleChange}
               disabled={isProfileEditDisabled && 'disabled'}
               name="name"
               type="text"
               placeholder="Имя"
-              minLength="6"
-              maxLength="40"
+              minLength="2"
+              maxLength="30"
               required
             />
             <span className="profile-input__error">{errors.name || ''}</span>
@@ -53,7 +85,7 @@ function Profile({ onSignOut }) {
               disabled={isProfileEditDisabled && 'disabled'}
               name="email"
               type="email"
-              value={values.email || currentUser.email}
+              value={values.email ?? currentUser.email}
               placeholder="Email"
               minLength="2"
               maxLength="30"
