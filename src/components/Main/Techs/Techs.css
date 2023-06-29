@@ -1,6 +1,7 @@
 .techs-section {
   margin-top: 76px;
   background-color: #272727;
+  border: 1px solid transparent;
 }
 
 .techs-section__title {
