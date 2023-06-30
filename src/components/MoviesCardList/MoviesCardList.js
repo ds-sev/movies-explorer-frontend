@@ -3,13 +3,13 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import Preloader from '../Preloader/Preloader'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { SCREEN_SIZE } from '../../utils/constants'
 
 function MoviesCardList({ onLikeClick, isLoading, moviesList }) {
 
   const location = useLocation()
-  const screenWidthMedium = 1024
-  const screenWidthSmall = 632
-  const [numberOfMovies, setNumberOfMovies] = useState(12)
+  const { desktop, tablet, mobile } = SCREEN_SIZE
+  const [numberOfMovies, setNumberOfMovies] = useState(desktop.moviesQuantity.total)
 
   useEffect(() => {
     const changeTimer = () => {
@@ -19,22 +19,22 @@ function MoviesCardList({ onLikeClick, isLoading, moviesList }) {
   })
 
   function changeNumberOfMoviesForRender() {
-    if (window.innerWidth < screenWidthMedium) {
-      return setNumberOfMovies(8)
+    if (window.innerWidth < tablet.width) {
+      return setNumberOfMovies(tablet.moviesQuantity.total)
     }
-    if (window.innerWidth < screenWidthSmall) {
-      return setNumberOfMovies(5)
+    if (window.innerWidth < mobile.width) {
+      return setNumberOfMovies(mobile.moviesQuantity.total)
     } else {
-      setNumberOfMovies(12)
+      setNumberOfMovies(desktop.moviesQuantity.total)
     }
   }
 
   function handleMoreMoviesView() {
-    if (window.innerWidth > screenWidthMedium) {
-      return setNumberOfMovies(numberOfMovies + 3)
+    if (window.innerWidth > tablet.width) {
+      return setNumberOfMovies(numberOfMovies + desktop.moviesQuantity.more)
     }
-    if (window.innerWidth <= screenWidthMedium) {
-      return setNumberOfMovies(numberOfMovies + 2)
+    if (window.innerWidth <= tablet.width) {
+      return setNumberOfMovies(numberOfMovies + tablet.moviesQuantity.more)
     }
   }
 

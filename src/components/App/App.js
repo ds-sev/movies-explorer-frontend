@@ -17,6 +17,7 @@ import SuccessIcon from '../../images/icons/ok.svg'
 import FailIcon from '../../images/icons/not_ok.svg'
 import ConfirmIcon from '../../images/icons/confirm.svg'
 import { getMovies } from '../../utils/MoviesApi'
+import { SHORT_MOVIE_DURATION } from '../../utils/constants'
 
 function App() {
   /* STATES */
@@ -272,7 +273,7 @@ function checkAuth() {
         movie.nameRU.toLowerCase().indexOf(query) >= 0)
       if (isShortSavedMoviesSwActive) {
         const filteredShortLikedMovies = filteredLikedMovies.filter((movie) =>
-          movie.duration < 40)
+          movie.duration < SHORT_MOVIE_DURATION)
         setLikedMoviesToRender(filteredShortLikedMovies)
       } else {
         setLikedMoviesToRender(filteredLikedMovies)
@@ -289,13 +290,13 @@ function checkAuth() {
   function filterMoviesByQueryAndDuration(query) {
     const filteredMovies = allMovies.filter((movie) =>
       movie.nameRU.toLowerCase().indexOf(query) >= 0)
-    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 40)
+    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < SHORT_MOVIE_DURATION)
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
     updateFilteredMoviesList(filteredShortMovies)
   }
 
   function filterMoviesByDurationInResult() {
-    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < 40)
+    const filteredShortMovies = filteredMovies.filter((movie) => movie.duration < SHORT_MOVIE_DURATION)
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
     setFilteredShortMovies(filteredShortMovies)
   }
@@ -317,7 +318,7 @@ function checkAuth() {
 
   useEffect(() => {
     if (isShortSavedMoviesSwActive) {
-      const shortMovies = likedMoviesToRender.filter((movie) => movie.duration < 40)
+      const shortMovies = likedMoviesToRender.filter((movie) => movie.duration < SHORT_MOVIE_DURATION)
       setLikedMoviesToRender(shortMovies)
     } else {
       setLikedMoviesToRender(likedMoviesList)
