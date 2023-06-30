@@ -8,14 +8,16 @@ function Profile({ onSignOut, onProfileEdit }) {
 
   const currentUser = useContext(CurrentUserContext)
   const [isProfileEditDisabled, setIsProfileEditDisabled] = useState(true)
-  const { values, handleChange, errors, isValid, setIsValid } =
+  const { values, handleChange, errors, isValid, setIsValid, resetForm } =
     useFormWithValidation()
+  const newDataValidity = (!isValid || (values.name === currentUser.name && values.email === currentUser.email))
 
+  //use current user data in input values
   useEffect(() => {
-    if (values.name === currentUser.name && values.email === currentUser.email) {
-      setIsValid(false)
+    if (currentUser) {
+      resetForm(currentUser, {}, true)
     }
-  }, [values.name, values.email, currentUser.email, currentUser.name, setIsValid])
+  }, [currentUser, resetForm])
 
   const handleProfileEditBtnClick = () => setIsProfileEditDisabled(false)
   const onSignoutBtnClick = (evt) => {
@@ -43,7 +45,7 @@ function Profile({ onSignOut, onProfileEdit }) {
             <span className="profile__field-description">Имя</span>
             <input
               className="profile__field-value"
-              value={values.name ?? currentUser.name}
+              value={values.name || ''}
               onChange={handleChange}
               disabled={isProfileEditDisabled && 'disabled'}
               name="name"
@@ -63,7 +65,7 @@ function Profile({ onSignOut, onProfileEdit }) {
               disabled={isProfileEditDisabled && 'disabled'}
               name="email"
               type="email"
-              value={values.email ?? currentUser.email}
+              value={values.email || ''}
               placeholder="Email"
               minLength="2"
               maxLength="30"
@@ -77,7 +79,8 @@ function Profile({ onSignOut, onProfileEdit }) {
               <button className="profile__edit _button"
                       onClick={handleProfileEditBtnClick}>Редактировать</button>
             ) : (
-              <button className={`profile__save-button _button ${!isValid && 'profile__save-button_disabled'}`} disabled={!isValid}
+              <button className={`profile__save-button _button ${newDataValidity && 'profile__save-button_disabled'}`}
+                      disabled={newDataValidity}
               >Сохранить</button>
             )}
         </form>
