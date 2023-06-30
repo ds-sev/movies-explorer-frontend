@@ -22,7 +22,7 @@ function App() {
   /* STATES */
   // sign
   const [currentUser, setCurrentUser] = useState({})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('loggedIn'))
   const [infoTooltipState, setInfoTooltipState] = useState({ isOpen: false, text: '', image: '' })
 
   // movies
@@ -83,7 +83,7 @@ function App() {
     }
   }, [isLoggedIn])
 
-  function checkAuth() {
+function checkAuth() {
     if (localStorage.getItem('loggedIn')) {
       mainApi.getUserInfo()
       .then((res) => {
@@ -173,14 +173,17 @@ function App() {
 
   //movies
   useEffect(() => {
+    if (isLoggedIn) {
+      getMyMovies()
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => {
     if (location.pathname === '/saved-movies') {
       setLikedMoviesToRender(likedMoviesList)
     }
-  }, [location])
-
-  useEffect(() => {
     if (isLoggedIn) {
-      getMyMovies()
+      // getMyMovies()
       isShortMoviesSwitchActive
         ? updateFilteredMoviesList(filteredShortMovies)
         : updateFilteredMoviesList(filteredMovies)
@@ -356,12 +359,12 @@ function App() {
       <div className="body">
         <div className="page">
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route exact path="/" element={<Layout />}>
               <Route index element={<Main />} />
               <Route path="movies" element={
                 <ProtectedRouteElement
-                  element={Movies}
                   isLoggedIn={isLoggedIn}
+                  element={Movies}
                   shortMoviesSwitch={isShortMoviesSwitchActive}
                   setShortMoviesSwitch={setIsShortMoviesSwitchActive}
                   onMoviesSearch={handleMoviesSearch}
