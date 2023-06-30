@@ -28,6 +28,7 @@ function Profile({ onSignOut, onProfileEdit }) {
   const handleSubmit = (evt) => {
     evt.preventDefault()
     if (isValid) {
+      setIsProfileEditDisabled(true)
       onProfileEdit({
         userName: values.name ? values.name : currentUser.name,
         userEmail: values.email ? values.email : currentUser.email
