@@ -48,13 +48,31 @@ function MoviesCardList({ onLikeClick, isLoading, moviesList }) {
               moviesList.length
                 ?
                 <div className="movie-card-section__list">
-                  {moviesList.slice(0, numberOfMovies).map((movie) => (
-                    <MoviesCard
-                      movie={movie}
-                      key={movie.id || movie._id}
-                      onLikeClick={onLikeClick}
-                    />
-                  ))}
+                  <>
+                    {location.pathname === '/saved-movies'
+                      ? (
+                        <>
+                          {moviesList.map((movie) => (
+                            <MoviesCard
+                              movie={movie}
+                              key={movie.id || movie._id}
+                              onLikeClick={onLikeClick}
+                            />
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          {moviesList.slice(0, numberOfMovies).map((movie) => (
+                            <MoviesCard
+                              movie={movie}
+                              key={movie.id || movie._id}
+                              onLikeClick={onLikeClick}
+                            />
+                          ))}
+                        </>
+                      )
+                    }
+                  </>
                 </div>
                 :
                 <div className="movie-card-section__not-found-container">

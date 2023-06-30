@@ -70,12 +70,13 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([mainApi.getUserInfo(), getMovies()])
-      .then(([userData, moviesData]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMyMovies(), getMovies()])
+      .then(([userData, savedMovies, allMovies]) => {
         setCurrentUser(userData)
-        setAllMovies(moviesData)
-        if (moviesData !== undefined) {
-          localStorage.setItem('allMovies', JSON.stringify(moviesData))
+        setAllMovies(allMovies)
+        updateLikedMoviesList(savedMovies)
+        if (allMovies !== undefined) {
+          localStorage.setItem('allMovies', JSON.stringify(allMovies))
         }
       })
       .catch((err) => console.log(err))
@@ -83,6 +84,20 @@ function App() {
       // localStorage.clear()
     }
   }, [isLoggedIn])
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     function getMyMovies() {
+  //       mainApi.getMyMovies()
+  //       .then((movies) => {
+  //         updateLikedMoviesList(movies)
+  //       })
+  //       .catch(err => console.log(err))
+  //     }
+  //     getMyMovies()
+  //   }
+  // }, [isLoggedIn])
+
 
 function checkAuth() {
     if (localStorage.getItem('loggedIn')) {
@@ -174,11 +189,6 @@ function checkAuth() {
   }
 
   //movies
-  useEffect(() => {
-    if (isLoggedIn) {
-      getMyMovies()
-    }
-  }, [isLoggedIn])
 
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
@@ -190,23 +200,23 @@ function checkAuth() {
         ? updateFilteredMoviesList(filteredShortMovies)
         : updateFilteredMoviesList(filteredMovies)
     }
-  }, [location])
+  }, [location, likedMoviesList])
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      isShortMoviesSwitchActive
-        ? updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredShortMovies')))
-        : updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredMovies')))
-    }
-  }, [likedMoviesList])
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     isShortMoviesSwitchActive
+  //       ? updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredShortMovies')))
+  //       : updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredMovies')))
+  //   }
+  // }, [likedMoviesList])
 
-  function getMyMovies() {
-    mainApi.getMyMovies()
-    .then((movies) => {
-      updateLikedMoviesList(movies)
-    })
-    .catch(err => console.log(err))
-  }
+  // function getMyMovies() {
+  //   mainApi.getMyMovies()
+  //   .then((movies) => {
+  //     updateLikedMoviesList(movies)
+  //   })
+  //   .catch(err => console.log(err))
+  // }
 
   function updateLikedMoviesList(movies) {
     const likedMovies = movies.map(movie => ({ ...movie, isLiked: true }))

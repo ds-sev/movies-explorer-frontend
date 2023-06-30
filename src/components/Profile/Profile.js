@@ -8,7 +8,7 @@ function Profile({ onSignOut, onProfileEdit }) {
 
   const currentUser = useContext(CurrentUserContext)
   const [isProfileEditDisabled, setIsProfileEditDisabled] = useState(true)
-  const { values, handleChange, errors, isValid, setIsValid, resetForm } =
+  const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation()
   const newDataValidity = (!isValid || (values.name === currentUser.name && values.email === currentUser.email))
 
