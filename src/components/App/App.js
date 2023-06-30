@@ -307,7 +307,8 @@ function checkAuth() {
         filterMoviesByDurationInResult()
         localStorage.setItem('shortMoviesSwitch', true)
       } else {
-        updateFilteredMoviesList(filteredMovies)
+        filterMoviesByQuery(localStorage.getItem('allMoviesSearchQuery'))
+        // updateFilteredMoviesList(filteredMovies)
         localStorage.removeItem('shortMoviesSwitch')
       }
     } else {
