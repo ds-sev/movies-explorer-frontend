@@ -1,14 +1,19 @@
 import SignPage from '../SignPage/SignPage'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import { useState } from 'react'
 
 function Login({ onLogin }) {
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
 
-  const handleSubmit = (evt) => {
+  const [isBlocked, setIsBlocked] = useState(false)
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
-    onLogin(values, 'Успешный вход')
+    setIsBlocked(true)
+    await onLogin(values, 'Успешный вход')
+    setIsBlocked(false)
   }
 
   return (
@@ -28,8 +33,9 @@ function Login({ onLogin }) {
             onChange={handleChange}
             type="email"
             name="email"
-            minLength="2"
+            minLength="5"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.email || ''}</span>
@@ -43,6 +49,7 @@ function Login({ onLogin }) {
             name="password"
             minLength="6"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.password || ''}</span>

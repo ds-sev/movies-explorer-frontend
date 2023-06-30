@@ -1,14 +1,18 @@
 import SignPage from '../SignPage/SignPage'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import { useState } from 'react'
 
 function Register({ onRegister }) {
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
+  const [isBlocked, setIsBlocked] = useState(false)
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
-    onRegister(values, 'Вы успешно зарегистрировались')
+    setIsBlocked(true)
+    await onRegister(values, 'Вы успешно зарегистрировались')
+    setIsBlocked(false)
   }
 
   return (
@@ -29,6 +33,7 @@ function Register({ onRegister }) {
             name="name"
             minLength="2"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.name || ''}</span>
@@ -42,6 +47,7 @@ function Register({ onRegister }) {
             name="email"
             minLength="2"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.email || ''}</span>

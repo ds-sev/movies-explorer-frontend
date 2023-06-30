@@ -121,7 +121,7 @@ function checkAuth() {
     })
   }
 
-  function handleRegister(regFormValue, signupMessage) {
+  async function handleRegister(regFormValue, signupMessage) {
     mainApi
     .register(regFormValue)
     .then(() => {
@@ -129,6 +129,7 @@ function checkAuth() {
     })
     .catch((err) => {
       setInfoTooltipState({ isOpen: true, text: err, image: FailIcon })
+      scrollController.disableScroll()
       setTimeout(() => closePopup(), 3000)
       console.log(err)
     })
