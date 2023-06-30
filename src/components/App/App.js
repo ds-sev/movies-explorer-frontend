@@ -188,8 +188,9 @@ function App() {
         filterMoviesByDurationInResult()
         localStorage.setItem('shortMoviesSwitch', true)
       } else {
-        filterMoviesByQuery(localStorage.getItem('allMoviesSearchQuery'))
-        localStorage.removeItem('shortMoviesSwitch')
+        handleMoviesSearch(localStorage.getItem('allMoviesSearchQuery'))
+        .then(() => localStorage.removeItem('shortMoviesSwitch'))
+        // filterMoviesByQuery(localStorage.getItem('allMoviesSearchQuery'))
       }
     } else {
       notInitialRender.current = true
