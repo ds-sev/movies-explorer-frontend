@@ -47,7 +47,6 @@ function App() {
   const navigate = useNavigate()
   const notInitialRender = useRef(false)
 
-
   /* FUNCTIONS */
   //global
   const scrollController = {
@@ -65,7 +64,6 @@ function App() {
   }
 
   //sign
-
   useEffect(() => checkAuth(), [])
 
   useEffect(() => {
@@ -80,26 +78,10 @@ function App() {
         }
       })
       .catch((err) => console.log(err))
-    } else {
-      // localStorage.clear()
     }
   }, [isLoggedIn])
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     function getMyMovies() {
-  //       mainApi.getMyMovies()
-  //       .then((movies) => {
-  //         updateLikedMoviesList(movies)
-  //       })
-  //       .catch(err => console.log(err))
-  //     }
-  //     getMyMovies()
-  //   }
-  // }, [isLoggedIn])
-
-
-function checkAuth() {
+  function checkAuth() {
     if (localStorage.getItem('loggedIn')) {
       mainApi.getUserInfo()
       .then((res) => {
@@ -189,34 +171,40 @@ function checkAuth() {
   }
 
   //movies
-
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
       setLikedMoviesToRender(likedMoviesList)
     }
     if (isLoggedIn) {
-      // getMyMovies()
       isShortMoviesSwitchActive
         ? updateFilteredMoviesList(filteredShortMovies)
         : updateFilteredMoviesList(filteredMovies)
     }
   }, [location, likedMoviesList])
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     isShortMoviesSwitchActive
-  //       ? updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredShortMovies')))
-  //       : updateFilteredMoviesList(JSON.parse(localStorage.getItem('filteredMovies')))
-  //   }
-  // }, [likedMoviesList])
+  useEffect(() => {
+    if (notInitialRender.current) {
+      if (isShortMoviesSwitchActive) {
+        filterMoviesByDurationInResult()
+        localStorage.setItem('shortMoviesSwitch', true)
+      } else {
+        filterMoviesByQuery(localStorage.getItem('allMoviesSearchQuery'))
+        localStorage.removeItem('shortMoviesSwitch')
+      }
+    } else {
+      notInitialRender.current = true
+    }
 
-  // function getMyMovies() {
-  //   mainApi.getMyMovies()
-  //   .then((movies) => {
-  //     updateLikedMoviesList(movies)
-  //   })
-  //   .catch(err => console.log(err))
-  // }
+  }, [isShortMoviesSwitchActive])
+
+  useEffect(() => {
+    if (isShortSavedMoviesSwActive) {
+      const shortMovies = likedMoviesToRender.filter((movie) => movie.duration < SHORT_MOVIE_DURATION)
+      setLikedMoviesToRender(shortMovies)
+    } else {
+      setLikedMoviesToRender(likedMoviesList)
+    }
+  }, [isShortSavedMoviesSwActive])
 
   function updateLikedMoviesList(movies) {
     const likedMovies = movies.map(movie => ({ ...movie, isLiked: true }))
@@ -266,7 +254,6 @@ function checkAuth() {
   function removeLikedMovie(movie) {
     mainApi.removeMovie(movie)
     .then(() => {
-      // create new array without requested movie
       const newLikedMoviesList = likedMoviesList.filter(likedMovies =>
         likedMovies._id !== movie._id)
       const newFilteredLikedMoviesList = filteredLikedMovies.filter(likedMovies =>
@@ -310,31 +297,6 @@ function checkAuth() {
     localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies))
     setFilteredShortMovies(filteredShortMovies)
   }
-
-  useEffect(() => {
-    if (notInitialRender.current) {
-      if (isShortMoviesSwitchActive) {
-        filterMoviesByDurationInResult()
-        localStorage.setItem('shortMoviesSwitch', true)
-      } else {
-        filterMoviesByQuery(localStorage.getItem('allMoviesSearchQuery'))
-        // updateFilteredMoviesList(filteredMovies)
-        localStorage.removeItem('shortMoviesSwitch')
-      }
-    } else {
-      notInitialRender.current = true
-    }
-
-  }, [isShortMoviesSwitchActive])
-
-  useEffect(() => {
-    if (isShortSavedMoviesSwActive) {
-      const shortMovies = likedMoviesToRender.filter((movie) => movie.duration < SHORT_MOVIE_DURATION)
-      setLikedMoviesToRender(shortMovies)
-    } else {
-      setLikedMoviesToRender(likedMoviesList)
-    }
-  }, [isShortSavedMoviesSwActive])
 
   async function handleMoviesSearch(query) {
     const formattedQuery = query.toLowerCase()
