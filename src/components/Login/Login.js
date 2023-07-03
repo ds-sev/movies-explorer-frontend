@@ -1,26 +1,19 @@
 import SignPage from '../SignPage/SignPage'
-import { useState } from 'react'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
-function Login() {
-
-  const navigate = useNavigate()
-
-  const [isSignError, setIsSignError] = useState(false)
+function Login({ onLogin }) {
 
   const { values, handleChange, errors, isValid } =
     useFormWithValidation()
 
-  const handleSubmit = (evt) => {
+  const [isBlocked, setIsBlocked] = useState(false)
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
-    // TEMP
-    if (values.email === 'admin@admin' && values.password === 'admin@admin') {
-      localStorage.setItem('loggedIn', 'yes')
-      navigate('/')
-    } else {
-      setIsSignError(true)
-    }
+    setIsBlocked(true)
+    await onLogin(values, 'Успешный вход')
+    setIsBlocked(false)
   }
 
   return (
@@ -31,7 +24,6 @@ function Login() {
               hintLink="/signup"
               onSubmit={handleSubmit}
               isValid={isValid}
-              isSignError={isSignError}
     >
       <fieldset className="sign__inputs-container">
         <label className="sign__input-container">E-mail
@@ -41,8 +33,9 @@ function Login() {
             onChange={handleChange}
             type="email"
             name="email"
-            minLength="2"
+            minLength="5"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.email || ''}</span>
@@ -56,6 +49,7 @@ function Login() {
             name="password"
             minLength="6"
             maxLength="30"
+            disabled={isBlocked}
             required
           />
           <span className="sign-input__error">{errors.password || ''}</span>

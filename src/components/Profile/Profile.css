@@ -109,7 +109,7 @@
 
 .profile__save-button_disabled:hover {
   transition: none;
-  opacity: 1;
+  opacity: unset;
   cursor: unset;
 }
 

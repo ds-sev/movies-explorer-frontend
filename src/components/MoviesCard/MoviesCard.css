@@ -46,6 +46,18 @@
   background-image: url('../../images/icons/bookmark_active.svg');
 }
 
+.movie-card__delete {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-image: url('../../images/icons/delete.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 @media screen and (max-width: 1024px) {
   .movie-card__image {
     height: 189px;

@@ -58,6 +58,10 @@
   transform: scale(1.03);
 }
 
+.header__nav-link_active {
+  font-weight: 800;
+}
+
 .header__navigation-account {
   display: flex;
   align-items: center;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 400 400" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<clipPath id="ArtboardFrame">
+<rect height="400" width="400" x="0" y="0"/>
+</clipPath>
+<g clip-path="url(#ArtboardFrame)" id="Слой-1">
+<path d="M0.691724 199.889C0.691724 89.4475 90.0363-0.0833555 200.248-0.0833555C310.461-0.0833555 399.805 89.4475 399.805 199.889C399.805 310.331 310.461 399.862 200.248 399.862C90.0363 399.862 0.691724 310.331 0.691724 199.889Z" fill="#f5891d" fill-rule="nonzero" opacity="1" stroke="none"/>
+<path d="M88.1125 187.438L178.28 158.189" fill="none" opacity="1" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="30"/>
+<path d="M256.398 155.814L352.934 175.5" fill="none" opacity="1" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="30"/>
+<path d="M150.113 321.664C150.113 321.504 148.236 321.013 170.834 314.885C172.045 314.557 173.283 314.233 174.547 313.917C179.413 312.698 184.669 311.576 190.28 310.637C200.51 308.923 211.923 307.812 224.311 307.812C227.224 307.812 230.045 307.865 232.775 307.963C233.762 307.999 234.736 308.041 235.7 308.088C239.157 308.259 242.462 308.504 245.618 308.812C284.138 312.573 290.714 318.294 290.714 318.518C290.714 318.78 275.215 307.409 221.33 307.409C167.446 307.409 150.113 321.926 150.113 321.664Z" fill="#f5891d" fill-rule="nonzero" opacity="1" stroke="#ffffff" stroke-linecap="butt" stroke-linejoin="round" stroke-width="30"/>
+</g>
+</svg>

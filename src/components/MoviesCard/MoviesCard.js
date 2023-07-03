@@ -1,39 +1,49 @@
 import './MoviesCard.css'
+import { useLocation } from 'react-router-dom'
 
-import exampleCardImagePath from '../../images/movie_example/movie_card_pic.jpg'
-import { useState } from 'react'
-
-function MoviesCard() {
-
-  const [isLiked, setIsLiked] = useState(false)
-
+function MoviesCard({ movie, onLikeClick }) {
+  const { isLiked } = movie
+  const { pathname } = useLocation()
   const movieLikeButtonClassName = `movie-card__like _button ${isLiked && 'movie-card__like_active'}`
+  const hours = Math.floor(movie.duration / 60)
+  const minutes = movie.duration % 60
 
   function handleLikeClick() {
-    isLiked
-      ? setIsLiked(false)
-      : setIsLiked(true)
+    console.log(isLiked)
+    onLikeClick(movie, !isLiked)
   }
+
   return (
     <div className="movie-card">
       <div className="movie-card__info">
         <div className="movie-card__description">
-          <h6 className="movie-card__title">33 слова о дизайне</h6>
-          <span className="movie-card__duration">1ч 47м</span>
+          <h6 className="movie-card__title">{movie.nameRU}</h6>
+          <span className="movie-card__duration">{`${hours}ч ${minutes}м`}</span>
         </div>
         <div className="movie-card__like-container">
-          <button className={movieLikeButtonClassName}
-                  onClick={handleLikeClick}
-                  aria-label="избранное"></button>
+          {pathname === '/movies'
+            ? (<button className={movieLikeButtonClassName}
+                       onClick={handleLikeClick}
+                       type="button"
+                       aria-label="избранное"></button>)
+            : <button className="movie-card__delete _button"
+                      onClick={handleLikeClick}
+                      type="button"
+                      aria-label="избранное"></button>
+          }
         </div>
       </div>
-      <div className="movie-card__image"
-           style={{
-             backgroundImage: `url(${exampleCardImagePath})`,
-             backgroundPosition: 'center',
-             backgroundRepeat: 'no-repeat',
-             backgroundSize: 'cover'
-           }}></div>
+      <a href={movie.trailerLink} target="_blank" rel="noreferrer">
+        <div className="movie-card__image"
+             style={{
+               backgroundImage: typeof movie.image === 'string'
+                 ? `url(${movie.image})`
+                 : `url(${`https://api.nomoreparties.co` + movie.image.url})`,
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
+               backgroundSize: 'cover'
+             }}></div>
+      </a>
     </div>
   )
 }
