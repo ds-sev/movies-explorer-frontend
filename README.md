@@ -8,7 +8,7 @@
 Сайт-портфолио. После регистрации и авторизации также становится доступен сервис по поиску и сохранению в избранное фильмов.
 
 
-<p align="center"><a href="https://tinaevnk.movies-explorer.nomoredomains.xyz" target="_blank"><img src="https://github.com/ds-sev/movies-explorer-frontend/blob/main/movies-ex_screenshot.png" width="700px"></a></p>
+<p align="center"><img src="https://github.com/ds-sev/movies-explorer-frontend/blob/main/movies-ex_screenshot.png" width="700px"></p>
 
 ## *Функционал:*
 * Роуты защищены. Не авторизованный пользователь не может перейти к другим страницам, кроме главной.
