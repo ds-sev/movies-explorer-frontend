@@ -3,7 +3,7 @@ import './Footer.css'
 function Footer() {
   return (
     <footer className="footer _wrapper">
-      <span className="footer__project-info">Учебный проект Яндекс.Практикум х BeatFilm.</span>
+      <span className="footer__project-info">Dmitry L. х BeatFilm project.</span>
       <div className="footer__container">
         <span className="footer__copyright">&#169; 2023</span>
         <ul className="footer__links-container">

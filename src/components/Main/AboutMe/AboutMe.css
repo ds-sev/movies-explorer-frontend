@@ -61,18 +61,18 @@
     font-size: 40px;
     line-height: 100%;
   }
-  
+
   .about-me__subtitle {
     margin-bottom: 16px;
     font-size: 12px;
     line-height: 150%;
   }
-  
+
   .about-me__paragraph {
     font-size: 12px;
     line-height: 150%;
   }
-  
+
   .info-container__photo {
     width: 255px;
     height: 307px;
@@ -90,25 +90,25 @@
   .about-me {
     margin-top: 46px;
   }
-  
+
   .info-container {
     margin-top: 60px;
     gap: 85px;
   }
-  
+
   .info-container__photo {
     width: 100%;
   }
-  
+
   .about-me__title {
     font-size: 30px;
     line-height: 36px;
   }
-  
+
   .about-me__subtitle {
     margin-bottom: 22px;
   }
-  
+
   .about-me__paragraph {
     font-size: 11px;
     line-height: 145%;

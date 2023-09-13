@@ -112,7 +112,7 @@ class MainApi {
 
 const mainApi = new MainApi({
   // baseUrl: 'http://localhost:4200',
-  baseUrl: 'https://api.movies-ex.nomoredomains.rocks',
+  baseUrl: 'https://api.web-dev-sev.ru',
   filmsBaseUrl: 'https://api.nomoreparties.co',
   headers: {
     'Accept': 'application/json',
