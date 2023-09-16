@@ -10,7 +10,7 @@ function AboutMe() {
           <div>
             <h4 className="about-me__title">Дмитрий</h4>
             <p className="about-me__subtitle">Frontend-developer, 36&nbsp;лет</p>
-            <p className="about-me__paragraph">Привет! Я&nbsp;программист из&nbsp;Севастополя.
+            <p className="about-me__paragraph">&nbsp;&nbsp;&nbsp;&nbsp;Привет! Я&nbsp;программист из&nbsp;Севастополя.
               Занимаюсь веб-разработкой с&nbsp;начала 2022&nbsp;года. За&nbsp;это время прошел
               несколько курсов по&nbsp;верстке на&nbsp;платформе Stepik, курс по&nbsp;Angular
               в&nbsp;компании SolarLab и&nbsp;десятимесячный курс по&nbsp;Веб-разработке
