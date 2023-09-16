@@ -6,10 +6,10 @@ body,
 .container {
   background-color: #202020;
   height: 100%;
+  overflow: auto;
 }
 
 .container {
-  overflow: auto;
   scrollbar-gutter: stable;
 }
 
